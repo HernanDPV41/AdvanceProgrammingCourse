@@ -16,7 +16,7 @@ namespace CarDealer.Domain.Abstract
         /// <summary>
         /// Marca comercial de la entidad.
         /// </summary>
-        public string Brand { get; set; }
+        public string Brand { get;}
 
         #endregion
 
