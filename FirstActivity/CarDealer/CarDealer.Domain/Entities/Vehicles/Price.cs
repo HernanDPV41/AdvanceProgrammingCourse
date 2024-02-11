@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace CarDealer.Domain.Entities.Vehicles
 {
     /// <summary>
-    /// Precio de una entidad del consecionario.
+    /// Precio de una entidad del concesionario.
     /// </summary>
     public class Price
     {

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace CarDealer.Domain.Entities.Vehicles
 {
     /// <summary>
-    /// Clase base para los vehículos del concecionario.
+    /// Clase base para los vehículos del concesionario.
     /// </summary>
     public abstract class Vehicle : IBrand
     {
