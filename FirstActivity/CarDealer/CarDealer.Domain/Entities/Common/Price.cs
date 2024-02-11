@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarDealer.Domain.Entities.Vehicles
+namespace CarDealer.Domain.Entities.Common
 {
     /// <summary>
     /// Precio de una entidad del concesionario.

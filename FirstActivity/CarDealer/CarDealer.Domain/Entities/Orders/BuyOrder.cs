@@ -1,4 +1,5 @@
 ﻿using CarDealer.Domain.Entities.Clients;
+using CarDealer.Domain.Entities.Common;
 using CarDealer.Domain.Entities.Vehicles;
 using System;
 using System.Collections.Generic;
