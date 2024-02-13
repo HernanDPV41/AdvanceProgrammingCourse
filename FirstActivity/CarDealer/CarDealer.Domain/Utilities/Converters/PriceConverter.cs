@@ -14,7 +14,7 @@ namespace CarDealer.Domain.Utilities.Converters
     public class PriceConverter
     {
         /// <summary>
-        /// Valor actual de la moneda nacional.
+        /// Valor actual de la moneda nacional(CUP).
         /// </summary>
         private const double MN_CURRENT_VALUE = 1;
 
