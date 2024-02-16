@@ -19,5 +19,10 @@ namespace CarDealer.Domain.Entities.Clients
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ClientId { get; set; }
+
+        /// <summary>
+        /// Requerido por EntityFrameworkCore para migraciones.
+        /// </summary>
+        protected Client() { }
     }
 }

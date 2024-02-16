@@ -32,6 +32,11 @@ namespace CarDealer.Domain.Entities.Vehicles
         #endregion
 
         /// <summary>
+        /// Requerido por EntityFrameworkCore para migraciones.
+        /// </summary>
+        protected Car() { }
+
+        /// <summary>
         /// Inicializa un objeto <see cref="Car"/>.
         /// </summary>
         /// <param name="brand">Marca del automóvil.</param>

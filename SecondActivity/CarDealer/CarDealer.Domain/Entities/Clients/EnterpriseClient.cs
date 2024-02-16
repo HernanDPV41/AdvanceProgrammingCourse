@@ -24,6 +24,11 @@ namespace CarDealer.Domain.Entities.Clients
         #endregion
 
         /// <summary>
+        /// Requerido por EntityFrameworkCore para migraciones.
+        /// </summary>
+        protected EnterpriseClient() { }
+
+        /// <summary>
         /// Inicializa un objeto <see cref="EnterpriseClient"/>.
         /// </summary>
         /// <param name="brand">Marca de la empresa.</param>

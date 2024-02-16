@@ -31,6 +31,11 @@ namespace CarDealer.Domain.Entities.Clients
         #endregion
 
         /// <summary>
+        /// Requerido por EntityFrameworkCore para migraciones.
+        /// </summary>
+        protected PrivateClient() { }
+
+        /// <summary>
         /// Inicializa un objeto <see cref="PrivateClient"/>.
         /// </summary>
         /// <param name="id">Identificador del cliente.</param>

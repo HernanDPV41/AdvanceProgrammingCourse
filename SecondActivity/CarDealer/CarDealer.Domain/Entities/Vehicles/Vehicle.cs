@@ -47,6 +47,10 @@ namespace CarDealer.Domain.Entities.Vehicles
         public Color Color { get; set; }
 
         #endregion
+        /// <summary>
+        /// Requerido por EntityFrameworkCore para migraciones.
+        /// </summary>
+        protected Vehicle() { }
 
         /// <summary>
         /// Inicializa un objeto <see cref="Vehicle"/>.

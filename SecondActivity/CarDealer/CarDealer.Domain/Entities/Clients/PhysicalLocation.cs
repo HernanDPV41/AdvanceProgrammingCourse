@@ -39,6 +39,11 @@ namespace CarDealer.Domain.Entities.Clients
         #endregion
 
         /// <summary>
+        /// Requerido por EntityFrameworkCore para migraciones.
+        /// </summary>
+        protected PhysicalLocation() { }
+
+        /// <summary>
         /// Inicializa un objeto <see cref="PhysicalLocation"/>.
         /// </summary>
         /// <param name="country">País.</param>

@@ -60,6 +60,11 @@ namespace CarDealer.Domain.Entities.Orders
         #endregion
 
         /// <summary>
+        /// Requerido por EntityFrameworkCore para migraciones.
+        /// </summary>
+        protected BuyOrder() { }
+
+        /// <summary>
         /// Inicializa un objeto <see cref="BuyOrder"/>.
         /// </summary>
         /// <param name="client">Cliente que realiza la compra.</param>
