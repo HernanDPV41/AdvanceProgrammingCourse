@@ -98,6 +98,13 @@ namespace CarDealer.DataAccess.Concrete
 
             #endregion
 
+            modelBuilder.ApplyConfiguration(new EnterpriseClientFluentConfiguration());
+            modelBuilder.ApplyConfiguration(new PhysicalLocationFluentConfiguration());
+            modelBuilder.ApplyConfiguration(new PrivateClientFluentConfiguration());
+            modelBuilder.ApplyConfiguration(new PriceFluentConfiguration());
+            modelBuilder.ApplyConfiguration(new BuyOrderFluentConfiguration());
+            modelBuilder.ApplyConfiguration(new MotorcycleFluentConfiguration());
+            modelBuilder.ApplyConfiguration(new CarFluentConfiguration());
         }
 
 
