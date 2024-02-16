@@ -3,6 +3,8 @@ using CarDealer.Domain.Entities.Common;
 using CarDealer.Domain.Entities.Vehicles;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +15,12 @@ namespace CarDealer.Domain.Entities.Orders
     {
 
         #region Properties
+        /// <summary>
+        /// Identificador en el soporte de datos.
+        /// </summary>
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int BuyOrderId { get; set; }
 
         /// <summary>
         /// Cliente que realizó la compra.

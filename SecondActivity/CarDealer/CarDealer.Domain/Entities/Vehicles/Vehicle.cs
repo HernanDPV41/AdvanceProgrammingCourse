@@ -3,6 +3,8 @@ using CarDealer.Domain.Entities.Common;
 using CarDealer.Domain.Entities.Types;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -16,7 +18,12 @@ namespace CarDealer.Domain.Entities.Vehicles
     public abstract class Vehicle : IBrand
     {
         #region Properties
-
+        /// <summary>
+        /// Identificador en el soporte de datos.
+        /// </summary>
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int VehicleId { get; set; }
         /// <summary>
         /// Fuente de energía que consume el automóvil.
         /// </summary>

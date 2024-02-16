@@ -1,6 +1,8 @@
 ﻿using CarDealer.Domain.Entities.Types;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +15,12 @@ namespace CarDealer.Domain.Entities.Common
     public class Price
     {
         #region Properties
+        /// <summary>
+        /// Identificador en el soporte de datos.
+        /// </summary>
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int PriceId { get; set; }
 
         /// <summary>
         /// Divisa a en la que se expresa el valor del automóvil.
