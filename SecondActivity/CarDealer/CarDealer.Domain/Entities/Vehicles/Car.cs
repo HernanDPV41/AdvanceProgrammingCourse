@@ -1,4 +1,5 @@
-﻿using CarDealer.Domain.Entities.Types;
+﻿using CarDealer.Domain.Entities.Common;
+using CarDealer.Domain.Entities.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +42,8 @@ namespace CarDealer.Domain.Entities.Vehicles
         /// </summary>
         /// <param name="brand">Marca del automóvil.</param>
         /// <param name="energySource">Fuente de energía del automóvil.</param>
-        public Car(string brand, EnergySource energySource) : base(brand, energySource)
+        /// <param name="price">Precio del automóvil.</param>
+        public Car(string brand, EnergySource energySource, Price price) : base(brand, energySource, price)
         {
             IsAutonome = true;
             IsDescapotable = true;

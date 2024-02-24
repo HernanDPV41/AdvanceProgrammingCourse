@@ -11,26 +11,35 @@ using System.Threading.Tasks;
 
 namespace CarDealer.Domain.Entities.Orders
 {
-    public class BuyOrder
+    /// <summary>
+    /// Orden de compra.
+    /// </summary>
+    public class BuyOrder : Entity
     {
 
         #region Properties
-        /// <summary>
-        /// Identificador en el soporte de datos.
-        /// </summary>
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int BuyOrderId { get; set; }
 
         /// <summary>
         /// Cliente que realizó la compra.
         /// </summary>
-        public Client Client { get;}
+        [NotMapped]
+        public Client Client { get; set; }
+
+        /// <summary>
+        /// Identificador del cliente en el soporte de datos.
+        /// </summary>
+        public int ClientId { get; protected set; }
 
         /// <summary>
         /// Vehículo a comprar. 
         /// </summary>
-        public Vehicle Vehicle { get; }
+        [NotMapped]
+        public Vehicle Vehicle { get; set; }
+
+        /// <summary>
+        /// Identificador del vehículo en el soporte de datos.
+        /// </summary>
+        public int VehicleId { get; protected set; }
 
         /// <summary>
         /// Cantidad de unidades del vehículo compradas.
@@ -50,11 +59,13 @@ namespace CarDealer.Domain.Entities.Orders
         /// <summary>
         /// Indica si la orden de compra ya fue pagada;
         /// </summary>
+        [NotMapped]
         public bool IsPayed => PaymentDay is not null;
 
         /// <summary>
         /// Precio total a pagar por la orden.
         /// </summary>
+        [NotMapped]
         public Price TotalPrice => new Price(Vehicle.Price.Currency, Vehicle.Price.Value * Units);
 
         #endregion
@@ -73,7 +84,9 @@ namespace CarDealer.Domain.Entities.Orders
         public BuyOrder(Client client, Vehicle vehicle, int units = 1)
         {
             Client = client;
+            ClientId = client.Id;
             Vehicle = vehicle;
+            VehicleId = vehicle.Id;
             Units = units;
         }
 

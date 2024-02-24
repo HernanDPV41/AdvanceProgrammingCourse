@@ -12,20 +12,14 @@ namespace CarDealer.Domain.Entities.Common
     /// <summary>
     /// Precio de una entidad del concesionario.
     /// </summary>
-    public class Price
+    public class Price : Entity
     {
         #region Properties
-        /// <summary>
-        /// Identificador en el soporte de datos.
-        /// </summary>
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int PriceId { get; set; }
-
+        
         /// <summary>
         /// Divisa a en la que se expresa el valor del automóvil.
         /// </summary>
-        public MoneyType Currency { get; }
+        public MoneyType Currency { get; protected set;  }
 
         /// <summary>
         /// Valor del precio.

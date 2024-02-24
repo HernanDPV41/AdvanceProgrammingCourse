@@ -1,6 +1,7 @@
 ﻿using CarDealer.Domain.Abstract;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,13 @@ namespace CarDealer.Domain.Entities.Clients
         /// <summary>
         /// Ubicación geográfica de la sede de la empresa cliente.
         /// </summary>
+        [NotMapped]
         public PhysicalLocation Location { get; set; }
+        
+        /// <summary>
+        /// Identificador de la ubicación geográfica asociada.
+        /// </summary>
+        public int LocationId { get; protected set;}
 
         #endregion
 
@@ -37,6 +44,7 @@ namespace CarDealer.Domain.Entities.Clients
         {
             Brand = brand;
             Location = location;
+            LocationId = location.Id;
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CarDealer.Domain.Entities.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,16 +12,11 @@ namespace CarDealer.Domain.Entities.Clients
     /// <summary>
     /// Modela la ubicación geográfica de una entidad.
     /// </summary>
-    public class PhysicalLocation
+    public class PhysicalLocation : Entity
     {
 
         #region Properties
-        /// <summary>
-        /// Identificador en el soporte de datos.
-        /// </summary>
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int PhysicalLocationId { get; set; }
+       
         /// <summary>
         /// País.
         /// </summary>

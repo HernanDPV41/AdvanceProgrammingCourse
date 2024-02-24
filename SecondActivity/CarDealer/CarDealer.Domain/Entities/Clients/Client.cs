@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CarDealer.Domain.Entities.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,15 +12,8 @@ namespace CarDealer.Domain.Entities.Clients
     /// <summary>
     /// Modela un cliente de concesionario de autos.
     /// </summary>
-    public abstract class Client
+    public abstract class Client : Entity
     {
-        /// <summary>
-        /// Identificador del cliente en el soporte de datos. 
-        /// </summary>
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ClientId { get; set; }
-
         /// <summary>
         /// Requerido por EntityFrameworkCore para migraciones.
         /// </summary>

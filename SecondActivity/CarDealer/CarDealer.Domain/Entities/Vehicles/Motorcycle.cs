@@ -1,4 +1,5 @@
-﻿using CarDealer.Domain.Entities.Types;
+﻿using CarDealer.Domain.Entities.Common;
+using CarDealer.Domain.Entities.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,8 @@ namespace CarDealer.Domain.Entities.Vehicles
         /// </summary>
         /// <param name="brand">Marca de la motocicleta.</param>
         /// <param name="energySource">Fuente de energía de la motocicleta.</param>
-        public Motorcycle(string brand, EnergySource energySource) : base(brand, energySource)
+        /// /// <param name="price">Precio de la motocicleta.</param>
+        public Motorcycle(string brand, EnergySource energySource, Price price) : base(brand, energySource, price)
         {
             HasSideCar = false;
         }
