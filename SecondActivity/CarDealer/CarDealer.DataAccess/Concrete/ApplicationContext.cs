@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Sqlite.Infrastructure.Internal;
 using System.Drawing;
 using CarDealer.DataAccess.FluentConfigurations;
+using Microsoft.Data.Sqlite;
 
 namespace CarDealer.DataAccess.Concrete
 {
@@ -21,26 +22,27 @@ namespace CarDealer.DataAccess.Concrete
         /// <summary>
         /// Tabla de clientes.
         /// </summary>
-        DbSet<Client> Clients { get; set; }
+        public DbSet<Client> Clients { get; set; }
         /// <summary>
         /// Tabla de ubicación geográfica de una entidad.
         /// </summary>
-        DbSet<PhysicalLocation> PhysicalLocations { get; set; }
+        public DbSet<PhysicalLocation> PhysicalLocations { get; set; }
         /// <summary>
         /// Tabla de precios.
         /// </summary>
-        DbSet<Price> Prices { get; set; }
+        public DbSet<Price> Prices { get; set; }
         /// <summary>
         /// Tabla de órdenes de compra.
         /// </summary>
-        DbSet<BuyOrder> BuyOrders { get; set; }
+        public DbSet<BuyOrder> BuyOrders { get; set; }
         /// <summary>
         /// Tabla de vehículos.
         /// </summary>
-        DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
+
         #endregion
 
-
+       
         /// <summary>
         /// Requerido por EntityFrameworkCore para migraciones.
         /// </summary>
@@ -80,7 +82,7 @@ namespace CarDealer.DataAccess.Concrete
         {
             base.OnModelCreating(modelBuilder);
 
-            #region Abstract classes mapping
+            #region Base classes mapping
 
             modelBuilder.Entity<Client>().ToTable("Client");
 
@@ -99,10 +101,7 @@ namespace CarDealer.DataAccess.Concrete
             #endregion
 
             modelBuilder.ApplyConfiguration(new EnterpriseClientFluentConfiguration());
-            modelBuilder.ApplyConfiguration(new PhysicalLocationFluentConfiguration());
             modelBuilder.ApplyConfiguration(new PrivateClientFluentConfiguration());
-            modelBuilder.ApplyConfiguration(new PriceFluentConfiguration());
-            modelBuilder.ApplyConfiguration(new BuyOrderFluentConfiguration());
             modelBuilder.ApplyConfiguration(new MotorcycleFluentConfiguration());
             modelBuilder.ApplyConfiguration(new CarFluentConfiguration());
         }
@@ -131,10 +130,7 @@ namespace CarDealer.DataAccess.Concrete
 
             try
             {
-                //Es necesario declarar una variable de sistema cuyo nombre sea CarDealerDBPath y el valor será la carpeta donde se 
-                //va a almacenar la base de datos.
-                var connectionString = Environment.GetEnvironmentVariable("CarDealerDBPath", EnvironmentVariableTarget.Machine)
-                    ?? throw new ArgumentNullException("CarDealerDBPath");
+                var connectionString ="Data Source = CarDealerDB.sqlite";
                 optionsBuilder.UseSqlite(connectionString);
             }
             catch (Exception)
