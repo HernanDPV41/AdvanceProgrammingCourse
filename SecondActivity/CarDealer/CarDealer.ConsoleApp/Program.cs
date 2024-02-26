@@ -20,6 +20,7 @@ namespace CarDealer.ConsoleApp
                 appContext.Database.Migrate();
             }
 
+            //************ Create
             //Price carPrice = new Price(MoneyType.Euro, 4500);
 
             //appContext.Set<Price>().Add(carPrice);
@@ -30,15 +31,38 @@ namespace CarDealer.ConsoleApp
             //appContext.Set<Car>().Add(car);
             //appContext.SaveChanges();
 
-            var cars = appContext.Set<Car>().ToList();
+            //*************** Get
+            //var cars = appContext.Set<Car>().ToList();
 
-            foreach (var loadedCar in cars)
-            {
-                Price? price = appContext.Set<Price>().Find(loadedCar.PriceId);
-                if (price is null)
-                    throw new InvalidOperationException($"Cannot find price with Id {loadedCar.PriceId}.");
-                loadedCar.Price = price;
-            }
+            //foreach (var loadedCar in cars)
+            //{
+            //    Price? price = appContext.Set<Price>().Find(loadedCar.PriceId);
+            //    if (price is null)
+            //        throw new InvalidOperationException($"Cannot find price with Id {loadedCar.PriceId}.");
+            //    loadedCar.Price = price;
+            //}
+
+            //**************** Update
+            //var cars = appContext.Set<Car>().ToList();
+
+            //foreach (var loadedCar in cars)
+            //{
+            //    loadedCar.IsDescapotable = false;
+            //    appContext.Set<Car>().Update(loadedCar);
+            //}
+
+            //appContext.SaveChanges();
+
+            //***************** Delete
+            //var cars = appContext.Set<Car>().ToList();
+
+            //foreach (var loadedCar in cars)
+            //{
+            //    appContext.Set<Car>().Remove(loadedCar);
+            //}
+
+            //appContext.SaveChanges();
+
 
         }
     }
