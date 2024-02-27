@@ -3,6 +3,7 @@ using CarDealer.Domain.Entities.Common;
 using CarDealer.Domain.Entities.Types;
 using CarDealer.Domain.Entities.Vehicles;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CarDealer.ConsoleApp
 {
@@ -60,10 +61,10 @@ namespace CarDealer.ConsoleApp
             //{
             //    appContext.Set<Car>().Remove(loadedCar);
             //}
-
             //appContext.SaveChanges();
 
 
         }
+
     }
 }

@@ -18,7 +18,7 @@ namespace CarDealer.Domain.Entities.Vehicles
     public abstract class Vehicle : Entity, IBrand
     {
         #region Properties
-
+        
         /// <summary>
         /// Fuente de energía que consume el automóvil.
         /// </summary>
