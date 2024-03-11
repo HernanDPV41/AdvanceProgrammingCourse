@@ -33,8 +33,8 @@ namespace CarDealer.DataAccess.Abstract.Clients
         /// <summary>
         /// Elimina una ubicación de BD.
         /// </summary>
-        /// <param name="id">Identificador de la ubicación.</param>
-        void Delete(int id);
+        /// <param name="physicalLocation">Ubicación a eliminar.</param>
+        void Delete(PhysicalLocation physicalLocation);
 
     }
 }

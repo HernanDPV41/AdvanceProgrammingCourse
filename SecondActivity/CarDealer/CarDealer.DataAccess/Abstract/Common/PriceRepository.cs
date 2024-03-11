@@ -31,8 +31,8 @@ namespace CarDealer.DataAccess.Abstract.Common
         /// <summary>
         /// Elimina un precio de BD.
         /// </summary>
-        /// <param name="id">Identificador del precio a eliminar.</param>
-        void Delete(int id);
+        /// <param name="price">Precio a eliminar.</param>
+        void Delete(Price price);
 
     }
 }

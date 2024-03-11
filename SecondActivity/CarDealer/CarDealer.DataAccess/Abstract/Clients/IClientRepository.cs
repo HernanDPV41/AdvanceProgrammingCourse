@@ -52,8 +52,8 @@ namespace CarDealer.DataAccess.Abstract.Clients
         /// <summary>
         /// Elimina un cliente de BD.
         /// </summary>
-        /// <param name="id">Identificador del cliente a eliminar.</param>
-        void Delete(int id);
+        /// <param name="client">Cliente a eliminar.</param>
+        void Delete(Client client);
 
     }
 }

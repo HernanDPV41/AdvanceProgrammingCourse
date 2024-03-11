@@ -50,7 +50,7 @@ namespace CarDealer.DataAccess.Abstract.Vehicles
         /// <summary>
         /// Elimina un vehículo en BD.
         /// </summary>
-        /// <param name="id">Identificador del vehículo a eliminar.</param>
-        void Delete(int id);
+        /// <param name="vehicle">Vehículo a eliminar.</param>
+        void Delete(Vehicle vehicle);
     }
 }

@@ -19,11 +19,4 @@
     <ProjectReference Include="..\CarDealer.Domain\CarDealer.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repositories\Clients\" />
-    <Folder Include="Repositories\Common\" />
-    <Folder Include="Repositories\Vehicles\" />
-    <Folder Include="Repositories\Orders\" />
-  </ItemGroup>
-
 </Project>

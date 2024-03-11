@@ -48,7 +48,7 @@ namespace CarDealer.DataAccess.Abstract.Orders
         /// <summary>
         /// Elimina una orden de compra en BD.
         /// </summary>
-        /// <param name="id">Identificador de orden de compra.</param>
-        void Delete(int id);
+        /// <param name="order">Orden de compra a eliminar.</param>
+        void Delete(BuyOrder order);
     }
 }
