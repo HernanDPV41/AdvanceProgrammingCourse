@@ -20,7 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Abstract\" />
+    <Folder Include="Repositories\Clients\" />
+    <Folder Include="Repositories\Common\" />
+    <Folder Include="Repositories\Vehicles\" />
+    <Folder Include="Repositories\Orders\" />
   </ItemGroup>
 
 </Project>
