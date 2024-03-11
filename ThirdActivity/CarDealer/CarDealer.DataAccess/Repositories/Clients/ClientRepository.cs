@@ -29,7 +29,7 @@ namespace CarDealer.DataAccess.Repositories
             _context.Remove(client);
         }
 
-        public T? Get<T>(int id) where T : Client
+        public T? GetClient<T>(int id) where T : Client
         {
             return _context.Set<T>().Find(id);
         }

@@ -19,8 +19,4 @@
     <ProjectReference Include="..\CarDealer.Domain\CarDealer.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Abstract\" />
-  </ItemGroup>
-
 </Project>

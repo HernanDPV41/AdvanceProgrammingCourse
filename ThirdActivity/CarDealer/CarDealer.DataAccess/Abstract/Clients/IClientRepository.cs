@@ -35,7 +35,7 @@ namespace CarDealer.DataAccess.Abstract.Clients
         /// <typeparam name="T">Tipo de cliente a obtener.</typeparam>
         /// <param name="id">Identificador del cliente.</param>
         /// <returns>Cliente solicitado de existir en BD, de lo contrario <see langword="null"/> </returns>
-        T? Get<T>(int id) where T : Client;
+        T? GetClient<T>(int id) where T : Client;
 
         /// <summary>
         /// Obtiene todos los clientes de BD.
