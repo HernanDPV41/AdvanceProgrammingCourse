@@ -23,6 +23,11 @@ namespace CarDealer.DataAccess.Repositories
             _context.Remove(price);
         }
 
+        public void Update(Price price)
+        {
+            _context.Update(price);
+        }
+
         Price? IPriceRepository.Get(int id)
         {
             return _context.Set<Price>().Find(id);

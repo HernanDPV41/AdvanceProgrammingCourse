@@ -29,6 +29,12 @@ namespace CarDealer.DataAccess.Abstract.Common
         Price? Get(int id);
 
         /// <summary>
+        /// Actualiza el valor de un precio en BD.
+        /// </summary>
+        /// <param name="price">Precio a actualizar.</param>
+        void Update(Price price);
+
+        /// <summary>
         /// Elimina un precio de BD.
         /// </summary>
         /// <param name="price">Precio a eliminar.</param>

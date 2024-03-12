@@ -37,7 +37,6 @@ namespace CarDealer.DataAccess.Repositories
             _context = null;
         }
 
-
         public void BeginTransaction()
         {
             if (IsInTransaction)
@@ -51,7 +50,7 @@ namespace CarDealer.DataAccess.Repositories
 
         public void CommitTransaction()
         {
-            if (!IsInTransaction)
+            if (_context is null)
                 throw new InvalidOperationException("There is not an open transaction to commit.");
 
             _context.SaveChanges();
@@ -61,14 +60,14 @@ namespace CarDealer.DataAccess.Repositories
 
         public void PartialCommit()
         {
-            if (!IsInTransaction)
+            if (_context is null)
                 throw new InvalidOperationException("There is not an open transaction to commit.");
             _context.SaveChanges();
         }
 
         public void RollbackTransaction()
         {
-            if (!IsInTransaction)
+            if (_context is null)
                 throw new InvalidOperationException("There is not an open transaction to rollback.");
             _context.Dispose();
             _context = null;
