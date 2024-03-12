@@ -1,5 +1,6 @@
 ﻿using CarDealer.DataAccess.Abstract;
 using CarDealer.DataAccess.Concrete;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -43,6 +44,9 @@ namespace CarDealer.DataAccess.Repositories
                 throw new InvalidOperationException("Cannot begin a new transaction before closing the current one.");
             // Creando nuevo contexto para la transacción.
             _context = new ApplicationContext(_connectionString);
+            // Generando migración en caso de que la base de datos no exista.
+            if (!_context.Database.CanConnect())
+                _context.Database.Migrate();
         }
 
         public void CommitTransaction()
