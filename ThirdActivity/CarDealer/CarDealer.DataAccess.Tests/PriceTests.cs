@@ -65,16 +65,18 @@ namespace CarDealer.DataAccess.Tests
         {
             // Arrange
             _priceRepository.BeginTransaction();
-
-            // Execute
             var loadedPrice = _priceRepository.Get(id);
             Assert.IsNotNull(loadedPrice);
-            var newPrice = new Price(moneyType, value) { Id = loadedPrice.Id };
-            _priceRepository.Update(newPrice);
-            var modifyedPrice = _priceRepository.Get(id);
-            _priceRepository.CommitTransaction();
+
+
+            // Execute
+            loadedPrice.Currency=moneyType;
+            loadedPrice.Value=value; 
+            _priceRepository.Update(loadedPrice);
 
             // Assert
+            var modifyedPrice = _priceRepository.Get(id);
+            _priceRepository.CommitTransaction();
             Assert.AreEqual(modifyedPrice.Currency, moneyType);
             Assert.AreEqual(modifyedPrice.Value, value);
         }
