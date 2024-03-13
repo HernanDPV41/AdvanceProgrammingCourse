@@ -16,17 +16,17 @@ namespace CarDealer.Domain.Entities.Clients
         /// <summary>
         /// Nombre y apellidos de la persona.
         /// </summary>
-        public string Name { get; protected set; }
+        public string Name { get;  set; }
 
         /// <summary>
         /// Edad de la persona.
         /// </summary>
-        public int Age { get; protected set; }
+        public int Age { get; set; }
 
         /// <summary>
         /// Identificador de la persona.
         /// </summary>
-        public string IDNumber { get; protected set; }
+        public string IDNumber { get; set; }
 
         #endregion
 
@@ -41,7 +41,7 @@ namespace CarDealer.Domain.Entities.Clients
         /// <param name="idNumber">Identificador del cliente.</param>
         /// <param name="name">Nombre del cliente.</param>
         /// <param name="age">Edad del cliente.</param>
-        public PrivateClient(string idNumber, string name = "", int age = -1)
+        public PrivateClient(string idNumber, string name = "", int age=-1 )
         {
             Name = name;
             Age = age;
