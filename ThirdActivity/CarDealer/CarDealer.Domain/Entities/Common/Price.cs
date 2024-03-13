@@ -19,7 +19,7 @@ namespace CarDealer.Domain.Entities.Common
         /// <summary>
         /// Divisa a en la que se expresa el valor del automóvil.
         /// </summary>
-        public MoneyType Currency { get; protected set;  }
+        public MoneyType Currency { get; set;  }
 
         /// <summary>
         /// Valor del precio.
