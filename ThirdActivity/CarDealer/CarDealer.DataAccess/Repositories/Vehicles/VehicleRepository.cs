@@ -31,9 +31,14 @@ namespace CarDealer.DataAccess.Repositories
             _context.Remove(vehicle);
         }
 
-        public T? GetVehicle<T>(int id) where T : Car
+        public T? GetVehicle<T>(int id) where T : Vehicle
         {
             return _context.Set<T>().Find(id);
+        }
+
+        public IEnumerable<Vehicle> GetAll()
+        {
+            return _context.Set<Vehicle>().ToList();
         }
 
         public void Update(Vehicle vehicle)

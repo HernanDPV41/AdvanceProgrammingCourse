@@ -39,7 +39,14 @@ namespace CarDealer.DataAccess.Abstract.Vehicles
         /// <typeparam name="T">Tipo de vehículo a obtener.</typeparam>
         /// <param name="id">Identificador del vehículo.</param>
         /// <returns>Vehículo solicitado de existir en BD, de lo contrario <see langword="null"/></returns>
-        T? GetVehicle<T>(int id) where T : Car;
+        T? GetVehicle<T>(int id) where T : Vehicle;
+
+
+        /// <summary>
+        /// Obtiene todos los vehículos de BD.
+        /// </summary>
+        /// <returns>Vehículos en BD.</returns>
+        IEnumerable<Vehicle> GetAll();
 
         /// <summary>
         /// Actualiza un vehículo en BD.
