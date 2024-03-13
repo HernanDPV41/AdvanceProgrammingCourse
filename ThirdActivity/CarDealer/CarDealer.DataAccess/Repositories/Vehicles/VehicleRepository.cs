@@ -36,7 +36,7 @@ namespace CarDealer.DataAccess.Repositories
             return _context.Set<T>().Find(id);
         }
 
-        public IEnumerable<Vehicle> GetAll()
+        public IEnumerable<Vehicle> GetAllVehicles()
         {
             return _context.Set<Vehicle>().ToList();
         }

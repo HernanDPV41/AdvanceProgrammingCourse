@@ -46,7 +46,7 @@ namespace CarDealer.DataAccess.Abstract.Vehicles
         /// Obtiene todos los vehículos de BD.
         /// </summary>
         /// <returns>Vehículos en BD.</returns>
-        IEnumerable<Vehicle> GetAll();
+        IEnumerable<Vehicle> GetAllVehicles();
 
         /// <summary>
         /// Actualiza un vehículo en BD.

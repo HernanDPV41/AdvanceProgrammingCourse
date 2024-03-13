@@ -51,9 +51,6 @@ namespace CarDealer.DataAccess.Tests
         }
 
         [TestMethod]
-        //[DataRow("Toyota", "Pedro", 24)]
-        //[DataRow("Porsche", "Juan", 48)]
-        //[DataRow("Honda", "Jose", 32)]
         [DataRow("Louis Vutton", 1)]
         [DataRow("Copextel", 3)]
         [DataRow("Bravo", 2)]
@@ -146,7 +143,7 @@ namespace CarDealer.DataAccess.Tests
         [DataRow(2)] 
         [DataRow(0)] 
         [TestMethod]
-        public void Can_Update_DeleteClient(int pos)
+        public void Can_Delete_Client(int pos)
         {
             //Arrange
             _clientRepository.BeginTransaction();
