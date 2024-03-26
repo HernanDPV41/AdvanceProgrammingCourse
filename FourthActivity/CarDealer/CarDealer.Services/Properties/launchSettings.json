@@ -1,0 +1,13 @@
+﻿{
+  "profiles": {
+    "CarDealer.Services": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": false,
+      "applicationUrl": "http://localhost:5051;https://localhost:7051",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

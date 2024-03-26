@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option csharp_namespace = "CarDealer.Services";
+
+package price;
+
+
+service Price {
+  
+  rpc CreatePrice (CreatePriceRequest) returns (PriceDTO);
+}
+
+message PriceDTO{
+	int32 id = 1;
+	double value = 2;
+	MoneyTypes money_Type = 3;
+}
+
+message CreatePriceRequest{
+	double value = 1;
+	MoneyTypes money_Type = 2;
+}
+
+enum MoneyTypes{
+	MN = 0;
+	USD = 1;
+	MLC = 2;
+	Euro = 3;
+}
