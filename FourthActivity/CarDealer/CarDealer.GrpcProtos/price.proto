@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+option csharp_namespace = "CarDealer.GrpcProtos";
+
+package GrpcProtos;
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/struct.proto";
+import "common.proto";
+
+service Price {
+  
+  rpc CreatePrice (CreatePriceRequest) returns (PriceDTO);
+  rpc GetPrice (GetRequest) returns (NullablePriceDTO);
+  rpc UpdatePrice(PriceDTO) returns (google.protobuf.Empty);
+  rpc DeletePrice(PriceDTO) returns (google.protobuf.Empty);
+}
+
+message PriceDTO{
+	int32 id = 1;
+	double value = 2;
+	MoneyTypes money_Type = 3;
+}
+
+message NullablePriceDTO{
+	oneof kind{
+		google.protobuf.NullValue null = 1;
+		PriceDTO price = 2;
+	}
+}
+
+message CreatePriceRequest{
+	double value = 1;
+	MoneyTypes money_Type = 2;
+}
+
+enum MoneyTypes{
+	MN = 0;
+	USD = 1;
+	MLC = 2;
+	Euro = 3;
+}

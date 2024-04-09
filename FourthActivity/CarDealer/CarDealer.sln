@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarDealer.ConsoleApp", "Car
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarDealer.DataAccess.Tests", "CarDealer.DataAccess.Tests\CarDealer.DataAccess.Tests.csproj", "{CC6F1363-1824-4305-AE31-B06D746F2247}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarDealer.Services", "CarDealer.Services\CarDealer.Services.csproj", "{DB55DB01-9A73-4F2D-97D2-CBFF87545F98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarDealer.Services", "CarDealer.Services\CarDealer.Services.csproj", "{DB55DB01-9A73-4F2D-97D2-CBFF87545F98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarDealer.GrpcProtos", "CarDealer.GrpcProtos\CarDealer.GrpcProtos.csproj", "{67832881-DC7C-42DF-9B90-3AAC75E2DF2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{DB55DB01-9A73-4F2D-97D2-CBFF87545F98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB55DB01-9A73-4F2D-97D2-CBFF87545F98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB55DB01-9A73-4F2D-97D2-CBFF87545F98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67832881-DC7C-42DF-9B90-3AAC75E2DF2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67832881-DC7C-42DF-9B90-3AAC75E2DF2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67832881-DC7C-42DF-9B90-3AAC75E2DF2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67832881-DC7C-42DF-9B90-3AAC75E2DF2B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

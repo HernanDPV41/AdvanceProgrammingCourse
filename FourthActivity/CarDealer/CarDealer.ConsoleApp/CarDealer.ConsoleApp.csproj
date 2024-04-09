@@ -10,6 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CarDealer.DataAccess\CarDealer.DataAccess.csproj" />
     <ProjectReference Include="..\CarDealer.Domain\CarDealer.Domain.csproj" />
+    <ProjectReference Include="..\CarDealer.GrpcProtos\CarDealer.GrpcProtos.csproj" />
   </ItemGroup>
 
 </Project>

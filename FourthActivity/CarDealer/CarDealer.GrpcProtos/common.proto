@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+option csharp_namespace = "CarDealer.GrpcProtos";
+
+package GrpcProtos;
+
+message GetRequest{
+	int32 id = 1;
+}
