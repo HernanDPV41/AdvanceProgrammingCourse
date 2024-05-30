@@ -17,7 +17,7 @@ namespace CarDealer.DataAccess.FluentConfigurations
         public void Configure(EntityTypeBuilder<EnterpriseClient> builder)
         {
             builder.ToTable("EnterpriseClients");
-            builder.HasBaseType<Client>(); 
+            builder.HasBaseType<Client>();
         }
     }
     

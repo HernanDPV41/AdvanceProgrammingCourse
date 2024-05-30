@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarDealer.DataAccess.Tests"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarDealer.Services", "CarDealer.Services\CarDealer.Services.csproj", "{DB55DB01-9A73-4F2D-97D2-CBFF87545F98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarDealer.GrpcProtos", "CarDealer.GrpcProtos\CarDealer.GrpcProtos.csproj", "{67832881-DC7C-42DF-9B90-3AAC75E2DF2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarDealer.GrpcProtos", "CarDealer.GrpcProtos\CarDealer.GrpcProtos.csproj", "{67832881-DC7C-42DF-9B90-3AAC75E2DF2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

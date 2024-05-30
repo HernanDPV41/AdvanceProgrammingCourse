@@ -18,7 +18,7 @@ namespace CarDealer.Services
             builder.Services.AddAutoMapper(typeof(Program).Assembly);
             builder.Services.AddSingleton("Data Source=Data.sqlite");
             builder.Services.AddScoped<IPriceRepository, ApplicationRepository>();
-
+            
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

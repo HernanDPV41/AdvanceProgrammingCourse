@@ -45,8 +45,8 @@ namespace CarDealer.ConsoleApp
             }
 
             Console.WriteLine("Presione una tecla para obtener el precio");
-            //Console.ReadKey();
-            var getResponse = client.GetPrice(new GetRequest() { Id = 1 });
+            Console.ReadKey();
+            var getResponse = client.GetPrice(new GetRequest() { Id = createResponse.Id });
             if (getResponse.Price is null)
             {
                 Console.WriteLine("Cannot get price");
