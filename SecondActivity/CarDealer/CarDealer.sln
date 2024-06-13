@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarDealer.DataAccess", "Car
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarDealer.ConsoleApp", "CarDealer.ConsoleApp\CarDealer.ConsoleApp.csproj", "{DFD3ABDF-1660-4895-828B-44945E82EF6C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarDealer.Contract", "CarDealer.Contracts\CarDealer.Contract.csproj", "{0462A878-5460-4AF5-A02B-24C558F59530}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarDealer.Contracts", "CarDealer.Contracts\CarDealer.Contracts.csproj", "{0462A878-5460-4AF5-A02B-24C558F59530}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
