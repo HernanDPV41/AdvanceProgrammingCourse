@@ -25,7 +25,7 @@ namespace CarDealer.Contracts.Orders
         /// </summary>
         /// <param name="id">Identificador de la orden.</param>
         /// <returns>Orden de compra obtenida del soporte de datos; de no existir, <see langword="null"/>.</returns>
-        BuyOrder GetBuyOrderById(Guid id);
+        BuyOrder? GetBuyOrderById(Guid id);
 
         /// <summary>
         /// Actualiza el valor de una orden en el soporte de datos.

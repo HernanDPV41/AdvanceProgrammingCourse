@@ -1,7 +1,4 @@
-﻿using CarDealer.DataAccess.Concrete;
-using CarDealer.Domain.Entities.Common;
-using CarDealer.Domain.Entities.Types;
-using CarDealer.Domain.Entities.Vehicles;
+﻿using CarDealer.Domain.Entities.Vehicles;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -12,14 +9,14 @@ namespace CarDealer.ConsoleApp
         static void Main(string[] args)
         {
 
-            // Creando un contexto para interactuar con la Base de datos.
-            ApplicationContext appContext = new ApplicationContext("Data Source=CarDealerDB.sqlite");
-            // Verificando si la BD no existe
-            if(!appContext.Database.CanConnect())
-            {
-                // Migrando base de datos. Este paso genera la BD con las tablas configuradas en su migración.
-                appContext.Database.Migrate();
-            }
+            //// Creando un contexto para interactuar con la Base de datos.
+            //ApplicationContext appContext = new ApplicationContext("Data Source=CarDealerDB.sqlite");
+            //// Verificando si la BD no existe
+            //if(!appContext.Database.CanConnect())
+            //{
+            //    // Migrando base de datos. Este paso genera la BD con las tablas configuradas en su migración.
+            //    appContext.Database.Migrate();
+            //}
 
             //************ Create
             //Price carPrice = new Price(MoneyType.Euro, 4500);
