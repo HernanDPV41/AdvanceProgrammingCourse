@@ -1,4 +1,5 @@
 ﻿using CarDealer.Domain.Abstract;
+using CarDealer.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -20,13 +21,7 @@ namespace CarDealer.Domain.Entities.Clients
         /// <summary>
         /// Ubicación geográfica de la sede de la empresa cliente.
         /// </summary>
-        [NotMapped]
         public PhysicalLocation Location { get; set; }
-        
-        /// <summary>
-        /// Identificador de la ubicación geográfica asociada.
-        /// </summary>
-        public int LocationId { get; protected set;}
 
         #endregion
 
@@ -38,13 +33,17 @@ namespace CarDealer.Domain.Entities.Clients
         /// <summary>
         /// Inicializa un objeto <see cref="EnterpriseClient"/>.
         /// </summary>
+        /// <param name="id">Identificador de la entidad.</param>
         /// <param name="brand">Marca de la empresa.</param>
         /// <param name="location">Ubicación geográfica de la empresa.</param>
-        public EnterpriseClient(string brand, PhysicalLocation location)
+        public EnterpriseClient(
+            Guid id,
+            string brand, 
+            PhysicalLocation location)
+            :base(id)
         {
             Brand = brand;
             Location = location;
-            LocationId = location.Id;
         }
 
     }

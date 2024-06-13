@@ -1,5 +1,4 @@
 ﻿using CarDealer.Domain.Entities.Clients;
-using CarDealer.Domain.Entities.Common;
 using CarDealer.Domain.Entities.Orders;
 using CarDealer.Domain.Entities.Vehicles;
 using Microsoft.EntityFrameworkCore;
@@ -8,8 +7,11 @@ using Microsoft.EntityFrameworkCore.Sqlite.Infrastructure.Internal;
 using System.Drawing;
 using CarDealer.DataAccess.FluentConfigurations;
 using Microsoft.Data.Sqlite;
+using CarDealer.DataAccess.FluentConfigurations.Clients;
+using CarDealer.DataAccess.FluentConfigurations.Orders;
+using CarDealer.DataAccess.FluentConfigurations.Vehicles;
 
-namespace CarDealer.DataAccess.Concrete
+namespace CarDealer.DataAccess.Contexts
 {
     /// <summary>
     /// Define la estructura de la base de datos de la aplicación.
@@ -23,14 +25,6 @@ namespace CarDealer.DataAccess.Concrete
         /// Tabla de clientes.
         /// </summary>
         public DbSet<Client> Clients { get; set; }
-        /// <summary>
-        /// Tabla de ubicación geográfica de una entidad.
-        /// </summary>
-        public DbSet<PhysicalLocation> PhysicalLocations { get; set; }
-        /// <summary>
-        /// Tabla de precios.
-        /// </summary>
-        public DbSet<Price> Prices { get; set; }
         /// <summary>
         /// Tabla de órdenes de compra.
         /// </summary>
@@ -82,28 +76,13 @@ namespace CarDealer.DataAccess.Concrete
         {
             base.OnModelCreating(modelBuilder);
 
-            #region Base classes mapping
-
-            modelBuilder.Entity<Client>().ToTable("Client");
-
-            modelBuilder.Entity<PhysicalLocation>().ToTable("PhysicalLocations");
-
-            modelBuilder.Entity<Price>().ToTable("Prices");
-
-            modelBuilder.Entity<BuyOrder>().ToTable("BuyOrders");
-
-            modelBuilder.Entity<Vehicle>().ToTable("Vehicles");
-            modelBuilder.Entity<Vehicle>().Property(v => v.Color)
-                .HasConversion(
-                c => c.ToArgb(),
-                c => Color.FromArgb(c));
-
-            #endregion
-
-            modelBuilder.ApplyConfiguration(new EnterpriseClientFluentConfiguration());
-            modelBuilder.ApplyConfiguration(new PrivateClientFluentConfiguration());
-            modelBuilder.ApplyConfiguration(new MotorcycleFluentConfiguration());
-            modelBuilder.ApplyConfiguration(new CarFluentConfiguration());
+            modelBuilder.ApplyConfiguration(new ClientEntityTypeConfigurationBase());
+            modelBuilder.ApplyConfiguration(new EnterpriseClientEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new PrivateClientEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new BuyOrderEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new VehicleEntityTypeConfigurationBase());
+            modelBuilder.ApplyConfiguration(new CarEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new MotorcycleEntityTypeConfiguration());
         }
 
 

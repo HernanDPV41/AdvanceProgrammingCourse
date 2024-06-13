@@ -1,10 +1,5 @@
-﻿using CarDealer.Domain.Entities.Common;
-using CarDealer.Domain.Entities.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CarDealer.Domain.Types;
+using CarDealer.Domain.ValueObjects;
 
 namespace CarDealer.Domain.Utilities.Converters
 {

@@ -1,4 +1,5 @@
-﻿using CarDealer.Domain.Entities.Types;
+﻿using CarDealer.Domain.Common;
+using CarDealer.Domain.Types;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,19 +8,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarDealer.Domain.Entities.Common
+namespace CarDealer.Domain.ValueObjects
 {
     /// <summary>
     /// Precio de una entidad del concesionario.
     /// </summary>
-    public class Price : Entity
+    public class Price : ValueObject
     {
         #region Properties
         
         /// <summary>
         /// Divisa a en la que se expresa el valor del automóvil.
         /// </summary>
-        public MoneyType Currency { get; set;  }
+        public MoneyType Currency { get; protected set;  }
 
         /// <summary>
         /// Valor del precio.
@@ -27,6 +28,7 @@ namespace CarDealer.Domain.Entities.Common
         public double Value { get; set; }
 
         #endregion
+
         /// <summary>
         /// Requerido por EntityFrameworkCore para migraciones.
         /// </summary>
@@ -41,6 +43,12 @@ namespace CarDealer.Domain.Entities.Common
         {
             Currency = currency;
             Value = value;
+        }
+
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return Currency;
+            yield return Value;
         }
     }
 }
