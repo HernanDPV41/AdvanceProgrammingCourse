@@ -7,6 +7,7 @@ using CarDealer.DataAccess.Contexts;
 using CarDealer.DataAccess.Repositories.Clients;
 using CarDealer.DataAccess.Repositories.Orders;
 using CarDealer.DataAccess.Repositories.Vehicles;
+using CarDealer.Domain.Common;
 using CarDealer.Domain.Entities.Clients;
 using CarDealer.Domain.Entities.Orders;
 using CarDealer.Domain.Entities.Vehicles;
