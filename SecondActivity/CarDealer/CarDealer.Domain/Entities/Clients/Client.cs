@@ -1,4 +1,4 @@
-﻿using CarDealer.Domain.Entities.Common;
+﻿using CarDealer.Domain.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,8 +15,16 @@ namespace CarDealer.Domain.Entities.Clients
     public abstract class Client : Entity
     {
         /// <summary>
+        /// Requerido por EntityFramework.
+        /// </summary>
+        protected Client()
+        {
+            
+        }
+
+        /// <summary>
         /// Requerido por EntityFrameworkCore para migraciones.
         /// </summary>
-        protected Client() { }
+        protected Client(Guid id) : base(id) { }
     }
 }

@@ -38,10 +38,16 @@ namespace CarDealer.Domain.Entities.Clients
         /// <summary>
         /// Inicializa un objeto <see cref="PrivateClient"/>.
         /// </summary>
+        /// <param name="id">Identificador de la entidad.</param>
         /// <param name="idNumber">Identificador del cliente.</param>
         /// <param name="name">Nombre del cliente.</param>
         /// <param name="age">Edad del cliente.</param>
-        public PrivateClient(string idNumber, string name = "", int age = -1)
+        public PrivateClient(
+            Guid id, 
+            string idNumber, 
+            string name = "", 
+            int age = -1)
+            : base(id)
         {
             Name = name;
             Age = age;

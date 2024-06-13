@@ -1,18 +1,11 @@
-﻿using CarDealer.Domain.Entities.Common;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CarDealer.Domain.Common;
 
-namespace CarDealer.Domain.Entities.Clients
+namespace CarDealer.Domain.ValueObjects
 {
     /// <summary>
     /// Modela la ubicación geográfica de una entidad.
     /// </summary>
-    public class PhysicalLocation : Entity
+    public class PhysicalLocation : ValueObject
     {
 
         #region Properties
@@ -57,5 +50,11 @@ namespace CarDealer.Domain.Entities.Clients
             return $"{Country},{City},{Address}";
         }
 
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return Country;
+            yield return City;
+            yield return Address;
+        }
     }
 }
