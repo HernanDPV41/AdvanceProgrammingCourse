@@ -1,6 +1,7 @@
 ﻿using CarDealer.Domain.Abstract;
-using CarDealer.Domain.Entities.Common;
-using CarDealer.Domain.Entities.Types;
+using CarDealer.Domain.Common;
+using CarDealer.Domain.Types;
+using CarDealer.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -29,13 +30,7 @@ namespace CarDealer.Domain.Entities.Vehicles
         /// <summary>
         /// Precio del vehículo.
         /// </summary>
-        [NotMapped]
         public Price Price { get; set; }
-
-        /// <summary>
-        /// Identificador del precio en el soporte de datos.
-        /// </summary>
-        public int PriceId { get; protected set; }
 
         /// <summary>
         /// Existencias del vehículo en la tienda.
@@ -48,6 +43,7 @@ namespace CarDealer.Domain.Entities.Vehicles
         public Color Color { get; set; }
 
         #endregion
+
         /// <summary>
         /// Requerido por EntityFrameworkCore para migraciones.
         /// </summary>
@@ -56,14 +52,19 @@ namespace CarDealer.Domain.Entities.Vehicles
         /// <summary>
         /// Inicializa un objeto <see cref="Vehicle"/>.
         /// </summary>
+        /// <param name="id">Identificador de la entidad.</param>
         /// <param name="brand">Marca del vehículo.</param>
         /// <param name="energySource">Fuente de energía del vehículo.</param>
         /// <param name="price">Precio del vehículo.</param>
-        public Vehicle(string brand, EnergySource energySource, Price price)
+        public Vehicle(
+            Guid id, 
+            string brand, 
+            EnergySource energySource, 
+            Price price)
+            : base(id)
         {
             Stock = 0;
             Price = price;
-            PriceId = price.Id;
             Color = Color.Black;
             Brand = brand;
             EnergySource = energySource;
