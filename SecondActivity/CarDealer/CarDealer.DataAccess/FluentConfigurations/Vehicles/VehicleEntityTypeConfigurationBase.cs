@@ -1,5 +1,6 @@
 ﻿using CarDealer.DataAccess.FluentConfigurations.Common;
 using CarDealer.Domain.Entities.Vehicles;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace CarDealer.DataAccess.FluentConfigurations.Vehicles
     {
         public override void Configure(EntityTypeBuilder<Vehicle> builder)
         {
+            builder.ToTable("Vehicles");
             // Definiendo conversión a string para la estructura color
             builder.Property(x => x.Color)
                 .HasConversion(

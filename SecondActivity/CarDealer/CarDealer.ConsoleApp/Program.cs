@@ -19,8 +19,14 @@ namespace CarDealer.ConsoleApp
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
+            //Borrando BD en caso de existir una antigua,
+            // esto se hace pq para que este programa en particular
+            // funcione correctamente, debe iniciar con la BD vacía.
+            if (File.Exists("Data.sqlite"))
+                File.Delete("Data.sqlite");
+
             // Definiendo string de conexión.
             string connectionString = "Data Source = Data.sqlite";
 
@@ -74,7 +80,52 @@ namespace CarDealer.ConsoleApp
                 car2,
                 15);
 
-            // Almacenando entidades en BD.
+            // ***************Almacenando entidades en BD.
+            vehicleRepository.AddVehicle(car1);
+            vehicleRepository.AddVehicle(car2);
+            vehicleRepository.AddVehicle(motorcycle);
+
+            clientRepository.AddClient(privateClient);
+            clientRepository.AddClient(enterpriseClient);
+
+            buyOrderRepository.AddBuyOrder(buyOrder1);
+            buyOrderRepository.AddBuyOrder(buyOrder2);
+            buyOrderRepository.AddBuyOrder(buyOrder3);
+
+            // Es necesario guardar los cambios para que se actualice la BD.
+            unitOfWork.SaveChangesAsync(new CancellationToken()).Wait();
+
+            // ******************Obteniendo entidades relacionadas a una orden de compra.
+            Car? carFromOrder = vehicleRepository.GetVehicleById<Car>(buyOrder1.VehicleId);
+            PrivateClient? clientFromOrder = clientRepository.GetClientById<PrivateClient>(buyOrder1.ClientId);
+
+            if (carFromOrder is null || clientFromOrder is null)
+                Console.WriteLine("Las entidades de la orden 1 no se encontraron en BD.");
+            else
+            {
+                Console.WriteLine($"La orden 1 comprende una compra de {buyOrder1.Units} vehículo(s) de marca" +
+                    $" {carFromOrder.Brand} por el cliente {clientFromOrder.Name}.");
+            }
+            // Las operaciones de lectura no requieren que se guarden los cambios, ya que ellas no modifican
+            // a las entidades en BD.
+
+
+            // **************Modificando la cantidad de existencias de la motocicleta.
+            motorcycle.Stock = 25;
+
+            vehicleRepository.UpdateVehicle(motorcycle);
+            unitOfWork.SaveChangesAsync(new CancellationToken()).Wait();
+
+            Motorcycle? modifiedMotorcycle = vehicleRepository.GetVehicleById<Motorcycle>(motorcycle.Id);
+            Console.WriteLine($"Nueva cantidad de motocicletas {modifiedMotorcycle.Stock}");
+
+            // **************Eliminando un cliente.
+            clientRepository.DeleteClient(enterpriseClient);
+            unitOfWork.SaveChangesAsync(new CancellationToken()).Wait();
+
+            EnterpriseClient? deletedClient = clientRepository.GetClientById<EnterpriseClient>(enterpriseClient.Id);
+            if (deletedClient is null)
+                Console.WriteLine("Client successfully deleted.");
         }
 
     }

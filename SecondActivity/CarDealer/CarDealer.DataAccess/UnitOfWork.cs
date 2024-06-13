@@ -1,5 +1,6 @@
 ﻿using CarDealer.Contracts;
 using CarDealer.DataAccess.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarDealer.DataAccess
 {
@@ -13,6 +14,8 @@ namespace CarDealer.DataAccess
         public UnitOfWork(ApplicationContext context)
         {
             _context = context;
+            if (!context.Database.CanConnect())
+                context.Database.Migrate();
         }
 
         public Task SaveChangesAsync(CancellationToken token)

@@ -15,6 +15,7 @@ namespace CarDealer.DataAccess.FluentConfigurations.Clients
     {
         public override void Configure(EntityTypeBuilder<Client> builder)
         {
+            builder.ToTable("Clients");
             base.Configure(builder);
         }
     }
