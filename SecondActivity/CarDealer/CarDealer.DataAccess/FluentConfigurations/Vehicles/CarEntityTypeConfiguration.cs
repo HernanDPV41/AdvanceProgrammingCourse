@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 namespace CarDealer.DataAccess.FluentConfigurations.Vehicles
 {
     public class CarEntityTypeConfiguration
-        : VehicleEntityTypeConfigurationBase<Car>
+        : IEntityTypeConfiguration<Car>
     {
-        public override void Configure(EntityTypeBuilder<Car> builder)
+        public void Configure(EntityTypeBuilder<Car> builder)
         {
             builder.ToTable("Cars");
-            base.Configure(builder);
+            builder.HasBaseType(typeof(Vehicle));
         }
     }
 }

@@ -76,9 +76,11 @@ namespace CarDealer.DataAccess.Contexts
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.ApplyConfiguration(new ClientEntityTypeConfigurationBase());
             modelBuilder.ApplyConfiguration(new EnterpriseClientEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new PrivateClientEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new BuyOrderEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new VehicleEntityTypeConfigurationBase());
             modelBuilder.ApplyConfiguration(new CarEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new MotorcycleEntityTypeConfiguration());
         }

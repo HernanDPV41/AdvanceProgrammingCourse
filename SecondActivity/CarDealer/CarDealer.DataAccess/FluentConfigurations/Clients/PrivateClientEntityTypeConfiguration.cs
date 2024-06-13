@@ -10,13 +10,12 @@ using System.Threading.Tasks;
 namespace CarDealer.DataAccess.FluentConfigurations.Clients
 {
     public class PrivateClientEntityTypeConfiguration
-        :ClientEntityTypeConfigurationBase<PrivateClient>
+        : IEntityTypeConfiguration<PrivateClient>
     {
-        public override void Configure(EntityTypeBuilder<PrivateClient> builder)
+        public void Configure(EntityTypeBuilder<PrivateClient> builder)
         {
             builder.ToTable("PrivateClients");
-            base.Configure(builder);
-
+            builder.HasBaseType(typeof(Client));
         }
     }
 }

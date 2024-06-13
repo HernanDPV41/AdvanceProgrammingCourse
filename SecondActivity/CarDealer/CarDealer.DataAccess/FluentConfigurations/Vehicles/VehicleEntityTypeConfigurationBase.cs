@@ -10,11 +10,10 @@ using System.Threading.Tasks;
 
 namespace CarDealer.DataAccess.FluentConfigurations.Vehicles
 {
-    public class VehicleEntityTypeConfigurationBase<T>
-        : EntityTypeConfigurationBase<T>
-        where T : Vehicle
+    public class VehicleEntityTypeConfigurationBase
+        : EntityTypeConfigurationBase<Vehicle>
     {
-        public override void Configure(EntityTypeBuilder<T> builder)
+        public override void Configure(EntityTypeBuilder<Vehicle> builder)
         {
             // Definiendo conversión a string para la estructura color
             builder.Property(x => x.Color)

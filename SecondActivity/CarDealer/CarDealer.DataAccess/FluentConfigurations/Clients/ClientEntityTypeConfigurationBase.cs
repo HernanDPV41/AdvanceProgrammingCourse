@@ -10,11 +10,10 @@ using System.Threading.Tasks;
 
 namespace CarDealer.DataAccess.FluentConfigurations.Clients
 {
-    public abstract class ClientEntityTypeConfigurationBase<T>
-        : EntityTypeConfigurationBase<T>
-        where T : Client
+    public class ClientEntityTypeConfigurationBase
+        : EntityTypeConfigurationBase<Client>
     {
-        public override void Configure(EntityTypeBuilder<T> builder)
+        public override void Configure(EntityTypeBuilder<Client> builder)
         {
             base.Configure(builder);
         }
