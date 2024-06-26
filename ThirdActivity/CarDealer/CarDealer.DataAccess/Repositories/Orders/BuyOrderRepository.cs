@@ -1,42 +1,43 @@
-﻿using CarDealer.DataAccess.Abstract.Orders;
-using CarDealer.Domain.Entities.Clients;
+﻿using CarDealer.Contracts.Orders;
+using CarDealer.DataAccess.Contexts;
+using CarDealer.DataAccess.Repositories.Common;
 using CarDealer.Domain.Entities.Orders;
-using CarDealer.Domain.Entities.Vehicles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarDealer.DataAccess.Repositories
+namespace CarDealer.DataAccess.Repositories.Orders
 {
-    public partial class ApplicationRepository : IBuyOrderRepository
+    /// <summary>
+    /// Implementación del repositorio <see cref="IBuyOrderRepository"/>.
+    /// </summary>
+    public class BuyOrderRepository
+        : RepositoryBase, IBuyOrderRepository
     {
-        public BuyOrder Create(Client client, Vehicle vehicle, int units = 1)
+        public BuyOrderRepository(ApplicationContext context) : base(context)
         {
-            BuyOrder buyOrder = new BuyOrder(client, vehicle, units);
-            _context.Add(buyOrder);
-            return buyOrder;
         }
 
-        public void Delete(BuyOrder order)
+        public void AddBuyOrder(BuyOrder buyOrder)
         {
-            _context.Remove(order);
+            _context.BuyOrders.Add(buyOrder);
         }
 
-        public IEnumerable<BuyOrder> GetByClient(Client client)
+        public void DeleteBuyOrder(BuyOrder buyOrder)
         {
-            return _context.Set<BuyOrder>().Where(x => x.ClientId == client.Id).ToList();
+            _context.BuyOrders.Remove(buyOrder);
         }
 
-        public IEnumerable<BuyOrder> GetByVehicle(Vehicle vehicle)
+        public BuyOrder? GetBuyOrderById(Guid id)
         {
-            return _context.Set<BuyOrder>().Where(x => x.VehicleId == vehicle.Id).ToList();
+            return _context.BuyOrders.FirstOrDefault(x => x.Id == id);
         }
 
-        BuyOrder? IBuyOrderRepository.Get(int id)
+        public void UpdateBuyOrder(BuyOrder buyOrder)
         {
-            return _context.Set<BuyOrder>().Find(id);
+            _context.BuyOrders.Update(buyOrder);
         }
     }
 }

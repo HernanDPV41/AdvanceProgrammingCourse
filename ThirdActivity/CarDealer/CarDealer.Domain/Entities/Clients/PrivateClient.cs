@@ -16,17 +16,17 @@ namespace CarDealer.Domain.Entities.Clients
         /// <summary>
         /// Nombre y apellidos de la persona.
         /// </summary>
-        public string Name { get;  set; }
+        public string Name { get; protected set; }
 
         /// <summary>
         /// Edad de la persona.
         /// </summary>
-        public int Age { get; set; }
+        public int Age { get; protected set; }
 
         /// <summary>
         /// Identificador de la persona.
         /// </summary>
-        public string IDNumber { get; set; }
+        public string IDNumber { get; protected set; }
 
         #endregion
 
@@ -38,10 +38,16 @@ namespace CarDealer.Domain.Entities.Clients
         /// <summary>
         /// Inicializa un objeto <see cref="PrivateClient"/>.
         /// </summary>
+        /// <param name="id">Identificador de la entidad.</param>
         /// <param name="idNumber">Identificador del cliente.</param>
         /// <param name="name">Nombre del cliente.</param>
         /// <param name="age">Edad del cliente.</param>
-        public PrivateClient(string idNumber, string name = "", int age=-1 )
+        public PrivateClient(
+            Guid id, 
+            string idNumber, 
+            string name = "", 
+            int age = -1)
+            : base(id)
         {
             Name = name;
             Age = age;

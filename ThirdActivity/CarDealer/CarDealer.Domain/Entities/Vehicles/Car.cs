@@ -1,10 +1,5 @@
-﻿using CarDealer.Domain.Entities.Common;
-using CarDealer.Domain.Entities.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CarDealer.Domain.Types;
+using CarDealer.Domain.ValueObjects;
 
 namespace CarDealer.Domain.Entities.Vehicles
 {
@@ -28,7 +23,7 @@ namespace CarDealer.Domain.Entities.Vehicles
         /// <summary>
         /// Capacidad de pasajeros.
         /// </summary>
-        public int PassangerCapacity { get; set; }
+        public int PassengerCapacity { get; set; }
 
         #endregion
 
@@ -40,14 +35,20 @@ namespace CarDealer.Domain.Entities.Vehicles
         /// <summary>
         /// Inicializa un objeto <see cref="Car"/>.
         /// </summary>
+        /// <param name="id">Identificador de la entidad.</param>
         /// <param name="brand">Marca del automóvil.</param>
         /// <param name="energySource">Fuente de energía del automóvil.</param>
         /// <param name="price">Precio del automóvil.</param>
-        public Car(string brand, EnergySource energySource, Price price) : base(brand, energySource, price)
+        public Car(
+            Guid id, 
+            string brand, 
+            EnergySource energySource, 
+            Price price) 
+            : base(id, brand, energySource, price)
         {
             IsAutonome = true;
             IsDescapotable = true;
-            PassangerCapacity = 4;
+            PassengerCapacity = 4;
         }
     }
 }
