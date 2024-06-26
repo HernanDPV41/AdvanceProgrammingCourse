@@ -1,12 +1,5 @@
-﻿using CarDealer.Contracts;
-using CarDealer.Contracts.Clients;
-using CarDealer.Contracts.Orders;
-using CarDealer.Contracts.Vehicles;
-using CarDealer.DataAccess;
+﻿using CarDealer.DataAccess;
 using CarDealer.DataAccess.Contexts;
-using CarDealer.DataAccess.Repositories.Clients;
-using CarDealer.DataAccess.Repositories.Orders;
-using CarDealer.DataAccess.Repositories.Vehicles;
 using CarDealer.Domain.Common;
 using CarDealer.Domain.Entities.Clients;
 using CarDealer.Domain.Entities.Orders;
@@ -34,11 +27,9 @@ namespace CarDealer.ConsoleApp
             // Creando contexto a usar por repositorios.
             ApplicationContext context = new ApplicationContext(connectionString);
 
-            // Creando instancias de repositorios y de UnitOfWork.
-            IUnitOfWork unitOfWork = new UnitOfWork(context);
-            IClientRepository clientRepository = new ClientRepository(context);
-            IVehicleRepository vehicleRepository = new VehicleRepository(context);
-            IBuyOrderRepository buyOrderRepository = new BuyOrderRepository(context);
+            //Generando la Bd en caso de no existir
+            if (!context.Database.CanConnect())
+                context.Database.Migrate();
 
             // Creando entidades para probar BD.
             Car car1 = new Car(
@@ -82,23 +73,27 @@ namespace CarDealer.ConsoleApp
                 15);
 
             // ***************Almacenando entidades en BD.
-            vehicleRepository.AddVehicle(car1);
-            vehicleRepository.AddVehicle(car2);
-            vehicleRepository.AddVehicle(motorcycle);
+            context.Vehicles.Add(car1);
+            context.Vehicles.Add(car2);
+            context.Vehicles.Add(motorcycle);
 
-            clientRepository.AddClient(privateClient);
-            clientRepository.AddClient(enterpriseClient);
+            context.Clients.Add(privateClient);
+            context.Clients.Add(enterpriseClient);
 
-            buyOrderRepository.AddBuyOrder(buyOrder1);
-            buyOrderRepository.AddBuyOrder(buyOrder2);
-            buyOrderRepository.AddBuyOrder(buyOrder3);
+            context.BuyOrders.Add(buyOrder1);
+            context.BuyOrders.Add(buyOrder2);
+            context.BuyOrders.Add(buyOrder3);
 
             // Es necesario guardar los cambios para que se actualice la BD.
-            unitOfWork.SaveChangesAsync(new CancellationToken()).Wait();
+            context.SaveChanges();
 
             // ******************Obteniendo entidades relacionadas a una orden de compra.
-            Car? carFromOrder = vehicleRepository.GetVehicleById<Car>(buyOrder1.VehicleId);
-            PrivateClient? clientFromOrder = clientRepository.GetClientById<PrivateClient>(buyOrder1.ClientId);
+            Car? carFromOrder = context
+                .Set<Car>()
+                .FirstOrDefault(v => v.Id == buyOrder1.VehicleId);
+            PrivateClient? clientFromOrder = context
+                .Set<PrivateClient>()
+                .FirstOrDefault(c => c.Id == buyOrder1.ClientId);
 
             if (carFromOrder is null || clientFromOrder is null)
                 Console.WriteLine("Las entidades de la orden 1 no se encontraron en BD.");
@@ -114,17 +109,21 @@ namespace CarDealer.ConsoleApp
             // **************Modificando la cantidad de existencias de la motocicleta.
             motorcycle.Stock = 25;
 
-            vehicleRepository.UpdateVehicle(motorcycle);
-            unitOfWork.SaveChangesAsync(new CancellationToken()).Wait();
+            context.Vehicles.Update(motorcycle);
+            context.SaveChanges();
 
-            Motorcycle? modifiedMotorcycle = vehicleRepository.GetVehicleById<Motorcycle>(motorcycle.Id);
+            Motorcycle? modifiedMotorcycle = context
+                .Set<Motorcycle>()
+                .FirstOrDefault(m => m.Id == motorcycle.Id);
             Console.WriteLine($"Nueva cantidad de motocicletas {modifiedMotorcycle.Stock}");
 
             // **************Eliminando un cliente.
-            clientRepository.DeleteClient(enterpriseClient);
-            unitOfWork.SaveChangesAsync(new CancellationToken()).Wait();
+            context.Clients.Remove(enterpriseClient);
+            context.SaveChanges();
 
-            EnterpriseClient? deletedClient = clientRepository.GetClientById<EnterpriseClient>(enterpriseClient.Id);
+            EnterpriseClient? deletedClient = context
+                .Set<EnterpriseClient>()
+                .FirstOrDefault(c => c.Id == enterpriseClient.Id);
             if (deletedClient is null)
                 Console.WriteLine("Client successfully deleted.");
         }
