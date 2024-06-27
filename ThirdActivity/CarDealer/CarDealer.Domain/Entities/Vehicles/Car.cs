@@ -13,7 +13,7 @@ namespace CarDealer.Domain.Entities.Vehicles
         /// <summary>
         /// Indica si el auto tiene manejo autónomo.
         /// </summary>
-        public bool IsAutonome { get; set; }
+        public bool IsAutonomous { get; set; }
 
         /// <summary>
         /// Indica si el automóvil es descapotable.
@@ -46,7 +46,7 @@ namespace CarDealer.Domain.Entities.Vehicles
             Price price) 
             : base(id, brand, energySource, price)
         {
-            IsAutonome = true;
+            IsAutonomous = true;
             IsDescapotable = true;
             PassengerCapacity = 4;
         }

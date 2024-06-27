@@ -94,7 +94,7 @@ namespace CarDealer.ConsoleApp
             buyOrderRepository.AddBuyOrder(buyOrder3);
 
             // Es necesario guardar los cambios para que se actualice la BD.
-            unitOfWork.SaveChangesAsync(new CancellationToken()).Wait();
+            unitOfWork.SaveChanges();
 
             // ******************Obteniendo entidades relacionadas a una orden de compra.
             Car? carFromOrder = vehicleRepository.GetVehicleById<Car>(buyOrder1.VehicleId);
@@ -115,14 +115,14 @@ namespace CarDealer.ConsoleApp
             motorcycle.Stock = 25;
 
             vehicleRepository.UpdateVehicle(motorcycle);
-            unitOfWork.SaveChangesAsync(new CancellationToken()).Wait();
+            unitOfWork.SaveChanges();
 
             Motorcycle? modifiedMotorcycle = vehicleRepository.GetVehicleById<Motorcycle>(motorcycle.Id);
             Console.WriteLine($"Nueva cantidad de motocicletas {modifiedMotorcycle.Stock}");
 
             // **************Eliminando un cliente.
             clientRepository.DeleteClient(enterpriseClient);
-            unitOfWork.SaveChangesAsync(new CancellationToken()).Wait();
+            unitOfWork.SaveChanges();
 
             EnterpriseClient? deletedClient = clientRepository.GetClientById<EnterpriseClient>(enterpriseClient.Id);
             if (deletedClient is null)

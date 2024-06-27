@@ -10,69 +10,25 @@ namespace CarDealer.DataAccess.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "BuyOrders",
+                name: "Clients",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    ClientId = table.Column<int>(type: "INTEGER", nullable: false),
-                    VehicleId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Units = table.Column<int>(type: "INTEGER", nullable: false),
-                    CreationDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    PaymentDay = table.Column<DateTime>(type: "TEXT", nullable: true)
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BuyOrders", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Client",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Client", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PhysicalLocations",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PhysicalLocations", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Prices",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Currency = table.Column<int>(type: "INTEGER", nullable: false),
-                    Value = table.Column<double>(type: "REAL", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Prices", x => x.Id);
+                    table.PrimaryKey("PK_Clients", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Vehicles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     EnergySource = table.Column<int>(type: "INTEGER", nullable: false),
                     Brand = table.Column<string>(type: "TEXT", nullable: false),
-                    PriceId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Price_Currency = table.Column<int>(type: "INTEGER", nullable: false),
+                    Price_Value = table.Column<double>(type: "REAL", nullable: false),
                     Stock = table.Column<int>(type: "INTEGER", nullable: false),
                     Color = table.Column<int>(type: "INTEGER", nullable: false)
                 },
@@ -85,18 +41,16 @@ namespace CarDealer.DataAccess.Migrations
                 name: "EnterpriseClients",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Brand = table.Column<string>(type: "TEXT", nullable: false),
-                    LocationId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Brand = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_EnterpriseClients", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_EnterpriseClients_Client_Id",
+                        name: "FK_EnterpriseClients_Clients_Id",
                         column: x => x.Id,
-                        principalTable: "Client",
+                        principalTable: "Clients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -105,8 +59,7 @@ namespace CarDealer.DataAccess.Migrations
                 name: "PrivateClients",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Age = table.Column<int>(type: "INTEGER", nullable: false),
                     IDNumber = table.Column<string>(type: "TEXT", nullable: false)
@@ -115,9 +68,37 @@ namespace CarDealer.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_PrivateClients", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PrivateClients_Client_Id",
+                        name: "FK_PrivateClients_Clients_Id",
                         column: x => x.Id,
-                        principalTable: "Client",
+                        principalTable: "Clients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BuyOrders",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    ClientId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    VehicleId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Units = table.Column<int>(type: "INTEGER", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    PaymentDay = table.Column<DateTime>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BuyOrders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BuyOrders_Clients_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "Clients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BuyOrders_Vehicles_VehicleId",
+                        column: x => x.VehicleId,
+                        principalTable: "Vehicles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -126,11 +107,10 @@ namespace CarDealer.DataAccess.Migrations
                 name: "Cars",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    IsAutonome = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    IsAutonomous = table.Column<bool>(type: "INTEGER", nullable: false),
                     IsDescapotable = table.Column<bool>(type: "INTEGER", nullable: false),
-                    PassangerCapacity = table.Column<int>(type: "INTEGER", nullable: false)
+                    PassengerCapacity = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -147,8 +127,7 @@ namespace CarDealer.DataAccess.Migrations
                 name: "Motorcycles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     HasSideCar = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
@@ -161,6 +140,16 @@ namespace CarDealer.DataAccess.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BuyOrders_ClientId",
+                table: "BuyOrders",
+                column: "ClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BuyOrders_VehicleId",
+                table: "BuyOrders",
+                column: "VehicleId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -178,19 +167,13 @@ namespace CarDealer.DataAccess.Migrations
                 name: "Motorcycles");
 
             migrationBuilder.DropTable(
-                name: "PhysicalLocations");
-
-            migrationBuilder.DropTable(
-                name: "Prices");
-
-            migrationBuilder.DropTable(
                 name: "PrivateClients");
 
             migrationBuilder.DropTable(
                 name: "Vehicles");
 
             migrationBuilder.DropTable(
-                name: "Client");
+                name: "Clients");
         }
     }
 }

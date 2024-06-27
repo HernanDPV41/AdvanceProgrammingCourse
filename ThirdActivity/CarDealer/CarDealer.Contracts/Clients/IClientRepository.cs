@@ -28,6 +28,13 @@ namespace CarDealer.Contracts.Clients
         T? GetClientById<T>(Guid id) where T : Client;
 
         /// <summary>
+        /// Obtiene todos los clientes del soporte de datos.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public IEnumerable<T> GetAllClients<T>() where T : Client;
+
+        /// <summary>
         /// Actualiza el valor de un cliente en el soporte de datos.
         /// </summary>
         /// <param name="client">Instancia con la información a actualizar del cliente.</param>

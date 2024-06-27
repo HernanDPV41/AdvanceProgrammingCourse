@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace CarDealer.DataAccess.Tests.Utilities
 {
     /// <summary>
-    /// Proveedor de cadena de conexión.
+    /// Proveedor de cadenas de conexión.
     /// </summary>
     public static class ConnectionStringProvider
     {
@@ -15,7 +15,7 @@ namespace CarDealer.DataAccess.Tests.Utilities
         /// Obtiene la cadena de conexión a utilizar en las pruebas.
         /// </summary>
         /// <returns></returns>
-        public static string GetConnectionString() => "Data Source=Data.sqlite";
+        public static string GetConnectionString() => "Data Source = Data.sqlite";
 
     }
 }

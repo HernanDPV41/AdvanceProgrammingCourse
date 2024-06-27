@@ -18,9 +18,9 @@ namespace CarDealer.DataAccess
                 context.Database.Migrate();
         }
 
-        public Task SaveChangesAsync(CancellationToken token)
+        public void SaveChanges()
         {
-            return _context.SaveChangesAsync(token);
+            _context.SaveChanges();
         }
     }
 }

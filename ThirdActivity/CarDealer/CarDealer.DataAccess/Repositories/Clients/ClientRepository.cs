@@ -29,6 +29,11 @@ namespace CarDealer.DataAccess.Repositories.Clients
             _context.Clients.Remove(client);
         }
 
+        public IEnumerable<T> GetAllClients<T>() where T : Client
+        {
+            return _context.Set<T>().ToList();
+        }
+
         public T? GetClientById<T>(Guid id) where T : Client
         {
             return _context.Set<T>().FirstOrDefault(i => i.Id == id);

@@ -115,7 +115,7 @@ namespace CarDealer.DataAccess.Migrations
                 {
                     b.HasBaseType("CarDealer.Domain.Entities.Vehicles.Vehicle");
 
-                    b.Property<bool>("IsAutonome")
+                    b.Property<bool>("IsAutonomous")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsDescapotable")
@@ -135,6 +135,50 @@ namespace CarDealer.DataAccess.Migrations
                         .HasColumnType("INTEGER");
 
                     b.ToTable("Motorcycles", (string)null);
+                });
+
+            modelBuilder.Entity("CarDealer.Domain.Entities.Orders.BuyOrder", b =>
+                {
+                    b.HasOne("CarDealer.Domain.Entities.Clients.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CarDealer.Domain.Entities.Vehicles.Vehicle", "Vehicle")
+                        .WithMany()
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Vehicle");
+                });
+
+            modelBuilder.Entity("CarDealer.Domain.Entities.Vehicles.Vehicle", b =>
+                {
+                    b.OwnsOne("CarDealer.Domain.ValueObjects.Price", "Price", b1 =>
+                        {
+                            b1.Property<Guid>("VehicleId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("Currency")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<double>("Value")
+                                .HasColumnType("REAL");
+
+                            b1.HasKey("VehicleId");
+
+                            b1.ToTable("Vehicles");
+
+                            b1.WithOwner()
+                                .HasForeignKey("VehicleId");
+                        });
+
+                    b.Navigation("Price")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CarDealer.Domain.Entities.Clients.EnterpriseClient", b =>

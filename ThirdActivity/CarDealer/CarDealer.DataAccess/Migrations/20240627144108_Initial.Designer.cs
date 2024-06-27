@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarDealer.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240613032621_Initial")]
+    [Migration("20240627144108_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -117,7 +117,7 @@ namespace CarDealer.DataAccess.Migrations
                 {
                     b.HasBaseType("CarDealer.Domain.Entities.Vehicles.Vehicle");
 
-                    b.Property<bool>("IsAutonome")
+                    b.Property<bool>("IsAutonomous")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsDescapotable")

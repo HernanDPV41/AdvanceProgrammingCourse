@@ -30,6 +30,11 @@ namespace CarDealer.DataAccess.Repositories.Orders
             _context.BuyOrders.Remove(buyOrder);
         }
 
+        public IEnumerable<BuyOrder> GetAllBuyOrders()
+        {
+            return _context.BuyOrders.ToList();
+        }
+
         public BuyOrder? GetBuyOrderById(Guid id)
         {
             return _context.BuyOrders.FirstOrDefault(x => x.Id == id);
