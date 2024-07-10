@@ -1,4 +1,6 @@
-﻿using CarDealer.DataAccess.Abstract.Clients;
+﻿using CarDealer.Contracts.Clients;
+using CarDealer.DataAccess.Contexts;
+using CarDealer.DataAccess.Repositories.Common;
 using CarDealer.Domain.Entities.Clients;
 using System;
 using System.Collections.Generic;
@@ -6,42 +8,40 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarDealer.DataAccess.Repositories
+namespace CarDealer.DataAccess.Repositories.Clients
 {
-    public partial class ApplicationRepository : IClientRepository
+    /// <summary>
+    /// Implementación del repositorio <see cref="IClientRepository"/>.
+    /// </summary>
+    public class ClientRepository
+        : RepositoryBase, IClientRepository
     {
-        public EnterpriseClient CreateEnterpriseClient(string brand, PhysicalLocation location)
+        public ClientRepository(ApplicationContext context)
+            : base(context) { }
+
+        public void AddClient(Client client)
         {
-            EnterpriseClient enterpriseClient = new EnterpriseClient(brand, location);
-            _context.Add(enterpriseClient);
-            return enterpriseClient;
+            _context.Clients.Add(client);
         }
 
-        public PrivateClient CreatePrivateClient(string idNumber, string name = "", int age = -1)
+        public void DeleteClient(Client client)
         {
-            PrivateClient privateClient = new PrivateClient(idNumber, name, age);
-            _context.Add(privateClient);
-            return privateClient;
+            _context.Clients.Remove(client);
         }
 
-        public void Delete(Client client)
-        {   
-            _context.Remove(client);
+        public IEnumerable<T> GetAllClients<T>() where T : Client
+        {
+            return _context.Set<T>().ToList();
         }
 
-        public T? GetClient<T>(int id) where T : Client
+        public T? GetClientById<T>(Guid id) where T : Client
         {
-            return _context.Set<T>().Find(id);
+            return _context.Set<T>().FirstOrDefault(i => i.Id == id);
         }
 
-        public IEnumerable<Client> GetAll()
+        public void UpdateClient(Client client)
         {
-            return _context.Set<Client>().ToList();
-        }
-
-        public void Update(Client client)
-        {
-            _context.Set<Client>().Update(client);
+            _context.Clients.Update(client);
         }
     }
 }

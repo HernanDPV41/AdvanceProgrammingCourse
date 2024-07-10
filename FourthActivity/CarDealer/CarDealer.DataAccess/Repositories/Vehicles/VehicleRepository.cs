@@ -1,6 +1,6 @@
-﻿using CarDealer.DataAccess.Abstract.Vehicles;
-using CarDealer.Domain.Entities.Common;
-using CarDealer.Domain.Entities.Types;
+﻿using CarDealer.Contracts.Vehicles;
+using CarDealer.DataAccess.Contexts;
+using CarDealer.DataAccess.Repositories.Common;
 using CarDealer.Domain.Entities.Vehicles;
 using System;
 using System.Collections.Generic;
@@ -8,42 +8,41 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarDealer.DataAccess.Repositories
+namespace CarDealer.DataAccess.Repositories.Vehicles
 {
-    public partial class ApplicationRepository : IVehicleRepository
+    /// <summary>
+    /// Implementación del repositorio <see cref="IVehicleRepository"/>.
+    /// </summary>
+    public class VehicleRepository
+        : RepositoryBase, IVehicleRepository
     {
-        public Car CreateCar(string brand, EnergySource energySource, Price price)
+        public VehicleRepository(ApplicationContext context) : base(context)
         {
-            Car car = new Car(brand, energySource, price);
-            _context.Add(car);
-            return car;
         }
 
-        public Motorcycle CreateMotorcycle(string brand, EnergySource energySource, Price price)
+        public void AddVehicle(Vehicle vehicle)
         {
-            Motorcycle motorcycle = new Motorcycle(brand, energySource, price);
-            _context.Add(motorcycle);
-            return motorcycle;
+            _context.Vehicles.Add(vehicle);
         }
 
-        public void Delete(Vehicle vehicle)
+        public void DeleteVehicle(Vehicle vehicle)
         {
-            _context.Remove(vehicle);
+            _context.Vehicles.Remove(vehicle);
         }
 
-        public T? GetVehicle<T>(int id) where T : Vehicle
+        public IEnumerable<T> GetAllVehicles<T>() where T : Vehicle
         {
-            return _context.Set<T>().Find(id);
+            return _context.Set<T>().ToList();
         }
 
-        public IEnumerable<Vehicle> GetAllVehicles()
+        public T? GetVehicleById<T>(Guid id) where T : Vehicle
         {
-            return _context.Set<Vehicle>().ToList();
+            return _context.Set<T>().FirstOrDefault(x => x.Id == id);
         }
 
-        public void Update(Vehicle vehicle)
+        public void UpdateVehicle(Vehicle vehicle)
         {
-            _context.Update(vehicle);
+            _context.Vehicles.Update(vehicle);
         }
     }
 }

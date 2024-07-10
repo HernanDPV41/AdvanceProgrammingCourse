@@ -1,13 +1,21 @@
-﻿using CarDealer.DataAccess.Abstract.Clients;
-using CarDealer.DataAccess.Repositories;
+﻿using CarDealer.Contracts;
+using CarDealer.Contracts.Clients;
+using CarDealer.Contracts.Vehicles;
+using CarDealer.DataAccess.Contexts;
+using CarDealer.DataAccess.Repositories.Clients;
+using CarDealer.DataAccess.Repositories.Vehicles;
 using CarDealer.DataAccess.Tests.Utilities;
+using CarDealer.Domain.Abstract;
 using CarDealer.Domain.Entities.Clients;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using CarDealer.Domain.Entities.Vehicles;
+using CarDealer.Domain.Types;
+using CarDealer.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace CarDealer.DataAccess.Tests
 {
@@ -17,153 +25,205 @@ namespace CarDealer.DataAccess.Tests
 
         private IClientRepository _clientRepository;
 
+        private IUnitOfWork _unitOfWork;
 
         public ClientTests()
         {
-            _clientRepository = new ApplicationRepository(ConnectionStringProvider.GetConnectionString());
+            ApplicationContext context =
+               new ApplicationContext(ConnectionStringProvider.GetConnectionString());
+            _clientRepository = new ClientRepository(context);
+            _unitOfWork = new UnitOfWork(context);
         }
 
+        [DataRow("78745845465","Pedro Pablo Gómez",28)]
+        [DataRow("78254845465","Javier Valdés Gonzalez",35)]
         [TestMethod]
-        [DataRow("02154215", "Pedro", 24)]
-        [DataRow("02158115", "Juan", 48)]
-        [DataRow("95895915", "Jose",-1)]
-        public void Can_Create_PrivateClient(string idNumber, string name, int age)
+        public void Can_Add_New_Private_Client(
+            string idNumber,
+            string name,
+            int age) 
         {
             // Arrange
-            _clientRepository.BeginTransaction();
-            PrivateClient? newClient;
-            // Execute
-           
-            if (age!=-1)
-            newClient = _clientRepository.CreatePrivateClient(idNumber, name, age);
-            else
-            newClient = _clientRepository.CreatePrivateClient(idNumber, name);
+            Guid id = Guid.NewGuid();
+            PrivateClient privateClient = new PrivateClient(
+                id,
+                idNumber,
+                name,
+                age);
 
-            _clientRepository.PartialCommit();
-            var loadedClient = _clientRepository.GetClient<PrivateClient>(newClient.Id);
-            _clientRepository.CommitTransaction();
+            // Execute
+            _clientRepository.AddClient(privateClient);
+            _unitOfWork.SaveChanges();
+
+            // Assert
+            PrivateClient? loadedClient = _clientRepository.GetClientById<PrivateClient>(id);
+            Assert.IsNotNull(loadedClient);
+        }
+
+        [DataRow("Etecsa", "Cuba", "Habana", "Obispo y Aguiar")]
+        [DataRow("Microsoft", "USA", "California", "Palo Alto, Silicon Valley")]
+        [TestMethod]
+        public void Can_Add_New_Enterprise_Client(
+            string brand,
+            string country,
+            string city,
+            string address)
+        {
+            // Arrange
+            Guid id = Guid.NewGuid();
+            EnterpriseClient enterpriseClient = new EnterpriseClient(
+                id,
+                brand,
+                new PhysicalLocation(
+                    country,
+                    city,
+                    address));
+
+            // Execute
+            _clientRepository.AddClient(enterpriseClient);
+            _unitOfWork.SaveChanges();
+
+            // Assert
+            EnterpriseClient? loadedClient = _clientRepository.GetClientById<EnterpriseClient>(id);
+            Assert.IsNotNull(loadedClient);
+        }
+
+        [DataRow(0)]
+        [TestMethod]
+        public void Can_Get_Private_Client_By_Id(int position)
+        {
+            // Arrange
+            var clients = _clientRepository.GetAllClients<PrivateClient>().ToList();
+            Assert.IsNotNull(clients);
+            Assert.IsTrue(position < clients.Count);
+            Client clientToGet = clients[position];
+
+            // Execute
+            PrivateClient? loadedClient = _clientRepository.GetClientById<PrivateClient>(clientToGet.Id);
 
             // Assert
             Assert.IsNotNull(loadedClient);
-            Assert.AreEqual(loadedClient.Name, newClient.Name);
-            Assert.AreEqual(loadedClient.IDNumber, newClient.IDNumber);
-            Assert.AreEqual(loadedClient.Age, newClient.Age);
         }
 
+        [DataRow(0)]
         [TestMethod]
-        [DataRow("Louis Vutton", 1)]
-        [DataRow("Copextel", 3)]
-        [DataRow("Bravo", 2)]
-        public void Can_Create_EnterpriseClient(string brand,int physicalLocationId )
+        public void Can_Get_Enterprise_Client_By_Id(int position)
         {
             // Arrange
-            _clientRepository.BeginTransaction();
-            var physicalLocation= ((IPhysicalLocationRepository)_clientRepository).Get(physicalLocationId);
-            if (physicalLocation is null)
-                Assert.Fail();
+            var clients = _clientRepository.GetAllClients<EnterpriseClient>().ToList();
+            Assert.IsNotNull(clients);
+            Assert.IsTrue(position < clients.Count);
+            EnterpriseClient clientToGet = clients[position];
 
             // Execute
-            var newClient = _clientRepository.CreateEnterpriseClient(brand, physicalLocation);
-            _clientRepository.PartialCommit();
-            var loadedClient = _clientRepository.GetClient<EnterpriseClient>(newClient.Id);
-            _clientRepository.CommitTransaction();
+            EnterpriseClient? loadedClient = _clientRepository.GetClientById<EnterpriseClient>(clientToGet.Id);
 
             // Assert
             Assert.IsNotNull(loadedClient);
-            Assert.AreEqual(loadedClient.Brand, newClient.Brand);
-            Assert.AreEqual(loadedClient.LocationId, physicalLocationId); 
         }
 
-        [DataRow(6)]
         [TestMethod]
-        public void Can_Get_Clients(int count)
+        public void Cannot_Get_Private_Client_By_Invalid_Id()
         {
-            //Arrange
-            _clientRepository.BeginTransaction();
+            // Arrange
 
-            //Execute
-            var clients = _clientRepository.GetAll();
-            _clientRepository.CommitTransaction();
+            // Execute
+            PrivateClient? loadedClient = _clientRepository.GetClientById<PrivateClient>(Guid.Empty);
 
             // Assert
-            Assert.AreEqual(count,clients.Count());
+            Assert.IsNull(loadedClient);
         }
 
-        [DataRow(26, 1)]
-        [DataRow(19,0)]
-        [DataRow(29,2)]
         [TestMethod]
-        public void Can_Update_PrivateClient(int age, int pos)
+        public void Cannot_Get_Enterprise_Client_By_Invalid_Id()
         {
-            //Arrange
-            _clientRepository.BeginTransaction();
-            var clients = _clientRepository.GetAll().OfType<PrivateClient>().ToList();
-            Assert.IsNotNull(clients);
-            var client =clients.ElementAt(pos);
-            Assert.IsNotNull(client);
+            // Arrange
 
-            //Execute
-            client.Age = age;
-            _clientRepository.Update(client);
-            _clientRepository.PartialCommit();
+            // Execute
+            EnterpriseClient? loadedClient = _clientRepository.GetClientById<EnterpriseClient>(Guid.Empty);
 
-            //Assert
-            var updatedClient=_clientRepository.GetClient<PrivateClient>(client.Id);
-            Assert.IsNotNull(updatedClient);
-            Assert.AreEqual(updatedClient.Age, age);
-
+            // Assert
+            Assert.IsNull(loadedClient);
         }
 
-        [DataRow("Autoviajes", 0)]
-        [DataRow("SpaceX",2)] 
+        [DataRow(0, 45)]
         [TestMethod]
-        public void Can_Update_EnterpriseClient(string brand, int pos)
+        public void Can_Update_Private_Client(int position, int age)
         {
-            //Arrange
-            _clientRepository.BeginTransaction();
-            var clients = _clientRepository.GetAll().OfType<EnterpriseClient>().ToList();
+            // Arrange
+            var clients = _clientRepository.GetAllClients<PrivateClient>().ToList();
             Assert.IsNotNull(clients);
-            var client =clients.ElementAt(pos);
-            Assert.IsNotNull(client);
+            Assert.IsTrue(position < clients.Count);
+            PrivateClient clientToUpdate = clients[position];
 
-            //Execute
-            client.Brand = brand;
-            _clientRepository.Update(client);
-            _clientRepository.PartialCommit();
+            // Execute
+            clientToUpdate.Age = age;
+            _clientRepository.UpdateClient(clientToUpdate);
+            _unitOfWork.SaveChanges();
 
-            //Assert
-            var updatedClient=_clientRepository.GetClient<EnterpriseClient>(client.Id);
-            _clientRepository.CommitTransaction();
-            Assert.IsNotNull(updatedClient);
-            Assert.AreEqual(updatedClient.Brand, brand);
-
+            // Assert
+            PrivateClient? loadedClient = _clientRepository.GetClientById<PrivateClient>(clientToUpdate.Id);
+            Assert.IsNotNull(loadedClient);
+            Assert.AreEqual(loadedClient.Age, age);
         }
 
-        [DataRow(5)]
-        [DataRow(2)] 
-        [DataRow(0)] 
+        [DataRow(0, "España", "Madrid", "Ordoñez y San Sebastián")]
         [TestMethod]
-        public void Can_Delete_Client(int pos)
+        public void Can_Update_Enterprise_Client(int position, string country, string city, string address)
         {
-            //Arrange
-            _clientRepository.BeginTransaction();
-            var clients = _clientRepository.GetAll();
+            // Arrange
+            var clients = _clientRepository.GetAllClients<EnterpriseClient>().ToList();
             Assert.IsNotNull(clients);
-            var count=clients.Count();
-            var client =clients.ElementAt(pos);
-            Assert.IsNotNull(client);
+            Assert.IsTrue(position < clients.Count);
+            EnterpriseClient clientToUpdate = clients[position];
 
-            //Execute 
-            _clientRepository.Delete(client);
-            _clientRepository.PartialCommit();
+            // Execute
+            clientToUpdate.Location = new PhysicalLocation(country,city,address);
+            _clientRepository.UpdateClient(clientToUpdate);
+            _unitOfWork.SaveChanges();
 
-            //Assert
-            clients = _clientRepository.GetAll();
-            Assert.AreEqual(count-1, clients.Count());
-            var deletedClient=_clientRepository.GetClient<Client>(client.Id);
-            _clientRepository.CommitTransaction();
-            Assert.IsNull(deletedClient);
+            // Assert
+            EnterpriseClient? loadedClient = _clientRepository.GetClientById<EnterpriseClient>(clientToUpdate.Id);
+            Assert.IsNotNull(loadedClient);
+            Assert.AreEqual(loadedClient.Location, new PhysicalLocation(country,city,address));
+        }
 
+        [DataRow(0)]
+        [TestMethod]
+        public void Can_Delete_Private_Client(int position)
+        {
+            // Arrange
+            var clients = _clientRepository.GetAllClients<PrivateClient>().ToList();
+            Assert.IsNotNull(clients);
+            Assert.IsTrue(position < clients.Count);
+            PrivateClient clientToDelete = clients[position];
+
+            // Execute
+            _clientRepository.DeleteClient(clientToDelete);
+            _unitOfWork.SaveChanges();
+
+            // Assert
+            PrivateClient? loadedClient = _clientRepository.GetClientById<PrivateClient>(clientToDelete.Id);
+            Assert.IsNull(loadedClient);
+        }
+
+        [DataRow(0)]
+        [TestMethod]
+        public void Can_Delete_Enterprise_Client(int position)
+        {
+            // Arrange
+            var clients = _clientRepository.GetAllClients<EnterpriseClient>().ToList();
+            Assert.IsNotNull(clients);
+            Assert.IsTrue(position < clients.Count);
+            EnterpriseClient clientToDelete = clients[position];
+
+            // Execute
+            _clientRepository.DeleteClient(clientToDelete);
+            _unitOfWork.SaveChanges();
+
+            // Assert
+            EnterpriseClient? loadedClient = _clientRepository.GetClientById<EnterpriseClient>(clientToDelete.Id);
+            Assert.IsNull(loadedClient);
         }
     }
 }
