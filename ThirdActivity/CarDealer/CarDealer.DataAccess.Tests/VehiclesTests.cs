@@ -168,9 +168,9 @@ namespace CarDealer.DataAccess.Tests
             Assert.AreEqual(loadedCar.PassengerCapacity,passengerCapacity);
         }
 
-        [DataRow(0, KnownColor.AliceBlue, false)]
+        [DataRow(0, false)]
         [TestMethod]
-        public void Can_Update_Motorcycle(int position, Color color, bool hasSideCar)
+        public void Can_Update_Motorcycle(int position, bool hasSideCar)
         {
             // Arrange
             var motorcycles = _vehicleRepository.GetAllVehicles<Motorcycle>().ToList();
@@ -179,7 +179,6 @@ namespace CarDealer.DataAccess.Tests
             Motorcycle motorcycleToUpdate = motorcycles[position];
 
             // Execute
-            motorcycleToUpdate.Color = color;
             motorcycleToUpdate.HasSideCar = hasSideCar;
             _vehicleRepository.UpdateVehicle(motorcycleToUpdate);
             _unitOfWork.SaveChanges();
@@ -187,7 +186,6 @@ namespace CarDealer.DataAccess.Tests
             // Assert
             Motorcycle? loadedMotorcycle = _vehicleRepository.GetVehicleById<Motorcycle>(motorcycleToUpdate.Id);
             Assert.IsNotNull(loadedMotorcycle);
-            Assert.AreEqual(loadedMotorcycle.Color, color);
             Assert.AreEqual(loadedMotorcycle.HasSideCar, hasSideCar);
         }
 

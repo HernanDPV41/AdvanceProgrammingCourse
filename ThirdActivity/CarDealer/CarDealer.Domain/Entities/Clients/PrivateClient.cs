@@ -21,7 +21,7 @@ namespace CarDealer.Domain.Entities.Clients
         /// <summary>
         /// Edad de la persona.
         /// </summary>
-        public int Age { get; protected set; }
+        public int Age { get; set; }
 
         /// <summary>
         /// Identificador de la persona.

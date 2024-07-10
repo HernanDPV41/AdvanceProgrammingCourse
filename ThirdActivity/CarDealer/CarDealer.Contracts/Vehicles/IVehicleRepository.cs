@@ -44,6 +44,5 @@ namespace CarDealer.Contracts.Vehicles
         /// </summary>
         /// <param name="vehicle">Vehículo a eliminar.</param>
         void DeleteVehicle(Vehicle vehicle);
-        void DeleteVehicle(object carToDelete);
     }
 }
