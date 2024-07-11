@@ -5,5 +5,33 @@ option csharp_namespace = "CarDealer.GrpcProtos";
 package GrpcProtos;
 
 message GetRequest{
-	int32 id = 1;
+	string id = 1;
+}
+
+message DeleteRequest{
+	string id = 1;
+}
+
+message Price{
+	MoneyTypes moneyType = 1;
+	double value = 2;
+}
+
+message Color{
+	int32 R = 1;
+	int32 G = 2;
+	int32 B = 3;
+}
+
+enum EnergySources{
+	Gasoline = 0;
+	Petroleum = 1;
+	Electricity = 2;
+}
+
+enum MoneyTypes{
+	MN = 0;
+	USD = 1;
+	MLC = 2;
+	Euro = 3;
 }

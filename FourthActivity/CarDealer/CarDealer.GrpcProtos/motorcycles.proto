@@ -1,0 +1,47 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "CarDealer.GrpcProtos";
+
+package GrpcProtos;
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/struct.proto";
+import "common.proto";
+
+service Motorcycle {
+  
+  rpc CreateMotorcycle (CreateMotorcycleRequest) returns (MotorcycleDTO);
+  rpc GetMotorcycle (GetRequest) returns (NullableMotorcycleDTO);
+  rpc GetAllMotorcycles (google.protobuf.Empty) returns (Motorcycles);
+  rpc UpdateMotorcycle(MotorcycleDTO) returns (google.protobuf.Empty);
+  rpc DeleteMotorcycle(DeleteRequest) returns (google.protobuf.Empty);
+}
+
+message MotorcycleDTO{
+	string id = 1;
+	EnergySources energySources = 2;
+	string brand = 3;
+	Price price = 4;
+	int32 stock = 5;
+	Color color = 6;
+	bool hasSideCar = 7;
+}
+
+message Motorcycles{
+	repeated MotorcycleDTO items = 1;
+}
+
+message NullableMotorcycleDTO{
+	oneof kind{
+		google.protobuf.NullValue null = 1;
+		MotorcycleDTO motorcycle = 2;
+	}
+}
+
+message CreateMotorcycleRequest{
+	string brand = 1;
+	EnergySources energySources = 2;
+	Price price = 3;
+}
+

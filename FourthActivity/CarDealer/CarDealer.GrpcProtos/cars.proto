@@ -1,0 +1,49 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "CarDealer.GrpcProtos";
+
+package GrpcProtos;
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/struct.proto";
+import "common.proto";
+
+service Car {
+  
+  rpc CreateCar (CreateCarRequest) returns (CarDTO);
+  rpc GetCar (GetRequest) returns (NullableCarDTO);
+  rpc GetAllCars (google.protobuf.Empty) returns (Cars);
+  rpc UpdateCar(CarDTO) returns (google.protobuf.Empty);
+  rpc DeleteCar(DeleteRequest) returns (google.protobuf.Empty);
+}
+
+message CarDTO{
+	string id = 1;
+	EnergySources energySources = 2;
+	string brand = 3;
+	Price price = 4;
+	int32 stock = 5;
+	Color color = 6;
+	bool isAutonomous = 7;
+	bool isDescapotable = 8;
+	int32 passengerCapacity = 9;
+}
+
+message Cars{
+	repeated CarDTO items = 1;
+}
+
+message NullableCarDTO{
+	oneof kind{
+		google.protobuf.NullValue null = 1;
+		CarDTO car = 2;
+	}
+}
+
+message CreateCarRequest{
+	string brand = 1;
+	EnergySources energySources = 2;
+	Price price = 3;
+}
+
