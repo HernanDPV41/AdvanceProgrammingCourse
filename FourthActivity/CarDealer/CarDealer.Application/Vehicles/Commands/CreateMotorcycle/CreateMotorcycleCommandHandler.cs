@@ -14,7 +14,6 @@ namespace CarDealer.Application.Vehicles.Commands.CreateMotorcycle
         : ICommandHandler<CreateMotorcycleCommand, Motorcycle>
     {
         private readonly IVehicleRepository _vehicleRepository;
-
         private readonly IUnitOfWork _unitOfWork;
 
         public CreateMotorcycleCommandHandler(

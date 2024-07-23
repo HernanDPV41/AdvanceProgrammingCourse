@@ -14,8 +14,7 @@ namespace CarDealer.Application.Vehicles.Queries.GetMotorcycleById
         : IQueryHandler<GetMotorcycleByIdQuery, Motorcycle?>
     {
         private readonly IVehicleRepository _vehicleRepository;
-        private readonly IUnitOfWork _unitOfWork;
-
+        
         public GetMotorcycleByIdQueryHandler(
             IVehicleRepository vehicleRepository)
         {
@@ -28,3 +27,4 @@ namespace CarDealer.Application.Vehicles.Queries.GetMotorcycleById
         }
     }
 }
+    
