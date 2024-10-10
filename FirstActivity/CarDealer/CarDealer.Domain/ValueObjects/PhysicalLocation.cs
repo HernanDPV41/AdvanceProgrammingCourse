@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarDealer.Domain.Entities.Clients
+namespace CarDealer.Domain.ValueObjects
 {
     /// <summary>
     /// Modela la ubicación geográfica de una entidad.

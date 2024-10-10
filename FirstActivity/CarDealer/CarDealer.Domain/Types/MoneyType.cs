@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarDealer.Domain.Entities.Types
+namespace CarDealer.Domain.Types
 {
     /// <summary>
     /// Tipos de monedas a utilizar en las transacciones de compra de autos.

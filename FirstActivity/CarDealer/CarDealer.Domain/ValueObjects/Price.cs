@@ -1,11 +1,11 @@
-﻿using CarDealer.Domain.Entities.Types;
+﻿using CarDealer.Domain.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarDealer.Domain.Entities.Common
+namespace CarDealer.Domain.ValueObjects
 {
     /// <summary>
     /// Precio de una entidad del concesionario.

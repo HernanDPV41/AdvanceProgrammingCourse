@@ -1,4 +1,5 @@
 ﻿using CarDealer.Domain.Abstract;
+using CarDealer.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,5 +1,5 @@
-﻿using CarDealer.Domain.Entities.Common;
-using CarDealer.Domain.Entities.Types;
+﻿using CarDealer.Domain.Types;
+using CarDealer.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;

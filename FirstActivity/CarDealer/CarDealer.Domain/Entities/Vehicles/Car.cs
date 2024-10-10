@@ -1,4 +1,4 @@
-﻿using CarDealer.Domain.Entities.Types;
+﻿using CarDealer.Domain.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
