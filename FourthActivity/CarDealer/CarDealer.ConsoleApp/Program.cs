@@ -15,9 +15,15 @@ namespace CarDealer.ConsoleApp
             Console.ReadKey();
 
             Console.WriteLine("Creating channel and client");
+            
             var httpHandler = new HttpClientHandler();
-            httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
-            var channel = GrpcChannel.ForAddress("http://localhost:5051", new GrpcChannelOptions { HttpHandler = httpHandler });
+            httpHandler.ServerCertificateCustomValidationCallback = 
+                HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+            
+            var channel = GrpcChannel.ForAddress(
+                "http://localhost:5051", 
+                new GrpcChannelOptions { HttpHandler = httpHandler });
+
             if (channel is null)
             {
                 Console.WriteLine("Cannot connect");
