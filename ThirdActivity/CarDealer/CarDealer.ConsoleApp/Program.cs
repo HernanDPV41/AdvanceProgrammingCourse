@@ -4,6 +4,7 @@ using CarDealer.Contracts.Orders;
 using CarDealer.Contracts.Vehicles;
 using CarDealer.DataAccess;
 using CarDealer.DataAccess.Contexts;
+using CarDealer.DataAccess.FluentConfigurations.Vehicles;
 using CarDealer.DataAccess.Repositories.Clients;
 using CarDealer.DataAccess.Repositories.Orders;
 using CarDealer.DataAccess.Repositories.Vehicles;
@@ -34,10 +35,10 @@ namespace CarDealer.ConsoleApp
             // Creando contexto a usar por repositorios.
             ApplicationContext context = new ApplicationContext(connectionString);
 
-            // Creando instancias de repositorios y de UnitOfWork.
+            // Creando repositorios y UnitoFWork
             IUnitOfWork unitOfWork = new UnitOfWork(context);
-            IClientRepository clientRepository = new ClientRepository(context);
             IVehicleRepository vehicleRepository = new VehicleRepository(context);
+            IClientRepository clientRepository = new ClientRepository(context);
             IBuyOrderRepository buyOrderRepository = new BuyOrderRepository(context);
 
             // Creando entidades para probar BD.
@@ -96,17 +97,13 @@ namespace CarDealer.ConsoleApp
             // Es necesario guardar los cambios para que se actualice la BD.
             unitOfWork.SaveChanges();
 
-            // ******************Obteniendo entidades relacionadas a una orden de compra.
-            Car? carFromOrder = vehicleRepository.GetVehicleById<Car>(buyOrder1.VehicleId);
-            PrivateClient? clientFromOrder = clientRepository.GetClientById<PrivateClient>(buyOrder1.ClientId);
+            // ******************Obteniendo todas las entidades.
+            var cars = vehicleRepository.GetAllVehicles<Car>();
+            var motorcycles = vehicleRepository.GetAllVehicles<Motorcycle>();
+            var privateClients = clientRepository.GetAllClients<PrivateClient>();
+            var enterpriseClients = clientRepository.GetAllClients<EnterpriseClient>();
+            var buyOrders = buyOrderRepository.GetAllBuyOrders();
 
-            if (carFromOrder is null || clientFromOrder is null)
-                Console.WriteLine("Las entidades de la orden 1 no se encontraron en BD.");
-            else
-            {
-                Console.WriteLine($"La orden 1 comprende una compra de {buyOrder1.Units} vehículo(s) de marca" +
-                    $" {carFromOrder.Brand} por el cliente {clientFromOrder.Name}.");
-            }
             // Las operaciones de lectura no requieren que se guarden los cambios, ya que ellas no modifican
             // a las entidades en BD.
 
@@ -118,13 +115,15 @@ namespace CarDealer.ConsoleApp
             unitOfWork.SaveChanges();
 
             Motorcycle? modifiedMotorcycle = vehicleRepository.GetVehicleById<Motorcycle>(motorcycle.Id);
+            if (modifiedMotorcycle is null)
+                Console.WriteLine("No se pudo obtener la motocicleta recién modificada.");
             Console.WriteLine($"Nueva cantidad de motocicletas {modifiedMotorcycle.Stock}");
 
             // **************Eliminando un cliente.
             clientRepository.DeleteClient(enterpriseClient);
             unitOfWork.SaveChanges();
 
-            EnterpriseClient? deletedClient = clientRepository.GetClientById<EnterpriseClient>(enterpriseClient.Id);
+            EnterpriseClient? deletedClient = clientRepository.GetClientById<EnterpriseClient>(enterpriseClient.Id) ;
             if (deletedClient is null)
                 Console.WriteLine("Client successfully deleted.");
         }
