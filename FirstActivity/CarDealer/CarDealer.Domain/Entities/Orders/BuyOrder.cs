@@ -1,15 +1,21 @@
-﻿using CarDealer.Domain.Entities.Clients;
+﻿using CarDealer.Domain.Common;
+using CarDealer.Domain.Entities.Clients;
 using CarDealer.Domain.Entities.Vehicles;
 using CarDealer.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CarDealer.Domain.Entities.Orders
 {
-    public class BuyOrder
+    /// <summary>
+    /// Orden de compra.
+    /// </summary>
+    public class BuyOrder : Entity
     {
 
         #region Properties
@@ -17,12 +23,22 @@ namespace CarDealer.Domain.Entities.Orders
         /// <summary>
         /// Cliente que realizó la compra.
         /// </summary>
-        public Client Client { get;}
+        public Client Client { get; set; }
+
+        /// <summary>
+        /// Identificador del cliente asociado.
+        /// </summary>
+        public Guid ClientId { get; set; }
 
         /// <summary>
         /// Vehículo a comprar. 
         /// </summary>
-        public Vehicle Vehicle { get; }
+        public Vehicle Vehicle { get; set; }
+
+        /// <summary>
+        /// Identificador del vehículo en el soporte de datos.
+        /// </summary>
+        public Guid VehicleId { get; protected set; }
 
         /// <summary>
         /// Cantidad de unidades del vehículo compradas.
@@ -52,15 +68,28 @@ namespace CarDealer.Domain.Entities.Orders
         #endregion
 
         /// <summary>
+        /// Requerido por EntityFrameworkCore para migraciones.
+        /// </summary>
+        protected BuyOrder() { }
+
+        /// <summary>
         /// Inicializa un objeto <see cref="BuyOrder"/>.
         /// </summary>
+        /// <param name="id">Identificador de la entidad.</param>
         /// <param name="client">Cliente que realiza la compra.</param>
         /// <param name="vehicle">Vehículo que realiza la compra.</param>
         /// <param name="units">Unidades del vehículo compradas.</param>
-        public BuyOrder(Client client, Vehicle vehicle, int units = 1)
+        public BuyOrder(
+            Guid id, 
+            Client client, 
+            Vehicle vehicle, 
+            int units = 1)
+            : base(id)
         {
             Client = client;
+            ClientId = client.Id;
             Vehicle = vehicle;
+            VehicleId = vehicle.Id;
             Units = units;
         }
 

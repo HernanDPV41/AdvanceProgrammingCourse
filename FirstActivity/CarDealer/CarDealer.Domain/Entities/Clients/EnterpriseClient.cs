@@ -2,6 +2,7 @@
 using CarDealer.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,11 +26,21 @@ namespace CarDealer.Domain.Entities.Clients
         #endregion
 
         /// <summary>
+        /// Requerido por EntityFrameworkCore para migraciones.
+        /// </summary>
+        protected EnterpriseClient() { }
+
+        /// <summary>
         /// Inicializa un objeto <see cref="EnterpriseClient"/>.
         /// </summary>
+        /// <param name="id">Identificador de la entidad.</param>
         /// <param name="brand">Marca de la empresa.</param>
         /// <param name="location">Ubicación geográfica de la empresa.</param>
-        public EnterpriseClient(string brand, PhysicalLocation location)
+        public EnterpriseClient(
+            Guid id,
+            string brand, 
+            PhysicalLocation location)
+            :base(id)
         {
             Brand = brand;
             Location = location;
