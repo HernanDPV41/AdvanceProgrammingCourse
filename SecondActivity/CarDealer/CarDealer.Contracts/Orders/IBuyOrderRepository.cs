@@ -28,6 +28,12 @@ namespace CarDealer.Contracts.Orders
         BuyOrder? GetBuyOrderById(Guid id);
 
         /// <summary>
+        /// Obtiene todas las ordenes de compra del soporte de datos.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<BuyOrder> GetAllBuyOrders();
+
+        /// <summary>
         /// Actualiza el valor de una orden en el soporte de datos.
         /// </summary>
         /// <param name="buyOrder">Instancia con la información a actualizar de la orden.</param>

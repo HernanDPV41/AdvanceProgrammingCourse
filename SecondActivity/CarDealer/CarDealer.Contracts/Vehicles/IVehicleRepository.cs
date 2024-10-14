@@ -28,6 +28,12 @@ namespace CarDealer.Contracts.Vehicles
         T? GetVehicleById<T>(Guid id) where T : Vehicle;
 
         /// <summary>
+        /// Obtiene todos los vehículos del soporte de datos.
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<T> GetAllVehicles<T>() where T : Vehicle;
+
+        /// <summary>
         /// Actualiza el valor de un vehículo en el soporte de datos.
         /// </summary>
         /// <param name="vehicle">Instancia con la información a actualizar del vehículo.</param>

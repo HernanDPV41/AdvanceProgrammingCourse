@@ -12,6 +12,6 @@ namespace CarDealer.Contracts
     /// </summary>
     public interface IUnitOfWork
     {
-        Task SaveChangesAsync(CancellationToken token);
+        void SaveChanges();
     }
 }
